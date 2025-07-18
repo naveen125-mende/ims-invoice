@@ -34,129 +34,10 @@ export class AppComponent {
     this.generateJsPdf(downloadData)
   }
 
-
   async generateJsPdf(downloadData: any): Promise<void> {
     const doc = new jsPDF('p', 'mm', 'a4');
     const margin = 10;
     const lineHeight = 6;
-    // // Header
-    // doc.setFontSize(10);
-    // doc.text('GSTIN/ UIN : 29AAACH7409R1ZX', margin, 10);
-    // doc.setFontSize(16);
-    // doc.text('Tax Invoice', 105, 10, { align: 'center' });
-
-    // doc.setFontSize(10);
-    // doc.text('Original/Recipient', 200 - margin, 10, { align: 'right' });
-
-    // doc.addImage('/assets/logo.png', 'PNG', margin, 12, 25, 10); // Change path accordingly
-
-    // doc.text('Devlats', margin, 25);
-    // doc.text('Nizamabad IT Hub', margin, 30);
-    // doc.text('Mobile No: 9182029042,9182029042', margin, 35);
-    // doc.text('Email: info@devlats.com', margin, 40);
-
-    // // Boxed Information
-    // doc.setFontSize(9);
-    // doc.rect(margin, 45, 90, 25);
-    // doc.text('Billed By: Devlats', margin + 2, 50);
-    // doc.text('Phone: 9182029042', margin + 2, 55);
-    // doc.text('Email: info@devlats.com', margin + 2, 60);
-    // doc.text('GSTIN/ UIN :29AAACH7409R1ZX', margin + 2, 65);
-
-    // doc.rect(110, 45, 90, 25);
-    // doc.text('Billed To: Ram', 112, 50);
-    // doc.text('Phone: 9182020000', 112, 55);
-    // doc.text('Email: ram@gmail.com', 112, 60);
-    // doc.text('GSTIN/ UIN :99AAACH7409R1ZX', 112, 65);
-
-    // doc.text('Date: Mar 7, 2019', margin, 75);
-    // doc.text('Invoice No: 3', 80, 75);
-    // doc.text('Payment Mode: CASH', 130, 75);
-    // doc.text('Total Weight: 50 kg', 170, 75);
-
-    // // Notes Section
-    // doc.rect(margin, 80, 190, 10);
-    // doc.text('Notes :', margin + 2, 86);
-
-    // // Table 1 - Item Details
-    // (doc as any).autoTable({
-    //   startY: 92,
-    //   head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brand/Qlt', 'Qty', 'Unit', 'Price', 'Dis%', 'Amount']],
-    //   body: [
-    //     ['1', 'Iron', '1005', 'A grade', '5', 'KG', '600', '0%', '3,000.00'],
-    //     ['2', 'Birla', '1006', 'A grade', '5', 'KG', '500', '0%', '2,500.00'],
-    //   ],
-    //   styles: { fontSize: 8, halign: 'center' },
-    //   headStyles: { fillColor: [0, 0, 0] },
-    // });
-
-    // // Table 2 - Tax Summary
-    // (doc as any).autoTable({
-    //   startY: (doc as any).lastAutoTable.finalY + 5,
-    //   head: [['HSN/SAC', 'Taxable Value', 'Central tax Rate', 'Central tax Amount', 'State tax Rate', 'State tax Amount', 'Total Tax Amount']],
-    //   body: [
-    //     ['1005', '3,500.00', '10%', '350.00', '10%', '350.00', '700.00'],
-    //     ['1006', '2,500.00', '10%', '250.00', '10%', '250.00', '500.00'],
-    //     ['Total', '5,500.00', '', '600.00', '', '600.00', '5,500.00'],
-    //   ],
-    //   styles: { fontSize: 8, halign: 'center' },
-    //   headStyles: { fillColor: [0, 0, 0] },
-    // });
-
-    // let y = (doc as any).lastAutoTable.finalY + 5;
-
-    // // Amount in Words
-    // doc.text('Tax Amount (in words): INR Five thousand nine hundred Only', margin, y);
-    // y += lineHeight;
-
-    // // Summary Table
-    // const summary = [
-    //   ['Sub Total', ': 5,500.00'],
-    //   ['Discount', ': 0%'],
-    //   ['Transport Charges', ': 200.00'],
-    //   ['Loading Charges', ': 100.00'],
-    //   ['Unloading Charges', ': 100.00'],
-    //   ['Total Amount', ': 5,900.00'],
-    //   ['Paid Amount', ': 5,900.00'],
-    //   ['Remaining Amount', ': 00'],
-    // ];
-    // summary.forEach((row) => {
-    //   doc.text(row[0], 140, y);
-    //   doc.text(row[1], 180, y, { align: 'right' });
-    //   y += lineHeight;
-    // });
-
-    // // Bank Details
-    // y += 4;
-    // doc.setFontSize(10);
-    // doc.text("Company's Bank Details", margin, y);
-    // y += lineHeight;
-    // doc.text('Bank Name: Axis Bank', margin, y);
-    // y += lineHeight;
-    // doc.text('A/c No.: 0000000000', margin, y);
-    // y += lineHeight;
-    // doc.text('Branch & IFS Code: 357657', margin, y);
-
-    // // Footer
-    // y += 12;
-    // doc.text('For Your Company Name', margin, y);
-    // doc.text('Receiver Signature', 140, y);
-    // doc.text('Authorised Signatory', 170, y);
-
-    // y += lineHeight + 2;
-    // doc.setFontSize(8);
-    // doc.text('Terms & Conditions :-', margin, y);
-    // const terms = [
-    //   '1. Goods once sold will not be taken back or exchanged.',
-    //   '2. Subject to local jurisdiction only.',
-    //   '3. NO CLAIM SHALL BE ENTERTAINED AFTERLAYING THE TILES',
-    //   '4. Returns of goods will be accepted within 7 days from the date of purchase.',
-    // ];
-    // terms.forEach((term, i) => {
-    //   doc.text(term, margin + 4, y + (i + 1) * lineHeight);
-    // });
-
-
 
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
@@ -181,10 +62,11 @@ export class AppComponent {
 
     doc.rect(2, 2, pageWidth - 4, pageHeight - 4,)
 
-    doc.setFontSize(16);
+    doc.setFontSize(12);
+    doc.setFont('helvetica','bold');
     doc.text('TAX INVOICE', pageWidth / 2, 15, { align: 'center' });
 
-    doc.setFontSize(11);
+    doc.setFontSize(10);
     doc.text(`GSTIN/UIN:${invoice.gstin}`, 10, 15);
     doc.text(`Orginal/Recipient`, 170, 15);
     // const imageBase64 = await this.getImageAsBase64(imageUrl);
@@ -276,6 +158,7 @@ export class AppComponent {
         halign: 'right'
       }
     });
+    doc.setFont('helvetica','bold');
     doc.text('E. & O. E', 184, 123);
 
   const taxRows = this.invoiceDetails.taxItems.map(item => [
@@ -348,9 +231,42 @@ export class AppComponent {
       margin: { left: 10 },
       tableWidth: 187
     });
-
-    doc.text('Receiver Signature', 15, 285);
-    doc.text('Authorized Signatory', pageWidth - 50, 285);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.text('Tax Amount  (in words) :',margin,182)
+    doc.text('INR Five thousand nine hundred Only :',margin,186)
+    doc.setFont('helvetica','bold');
+    doc.text("Company's Bank Details",margin,198)
+    doc.setFont('helvetica','normal');
+    doc.text('Bank Name: Axis Bank',margin,202)
+    doc.text('A/c No : 00000000',margin,206)
+    doc.text('Branch & IFS CODE : 357657',margin,210)
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text('Sub Total : 12,000.00',155,182)
+    doc.text('Discount: 357657',155,186)
+    doc.text('Transport Charges: 357657',155,190)
+    doc.text('Loading Charges : 357657',155,194)
+    doc.text('UnLoading Charges : 357657',155,198)
+    doc.text('Total Amount : 52172',155,202)
+    doc.text('Paid Amount :  3241235325',155,206)
+    doc.text('Remaining Amount : 23453',155,210)
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.text('For Your Company Name',margin,242)
+    doc.line(120, 238, 150, 238);
+    doc.line(165, 238, 195, 238);
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text("Reciever's Signature",120,242)
+    doc.text("Authorised signatory",165,242)
+    doc.rect(margin,245,187,25);
+    doc.text("Terms & Conditions :-",margin+2,250)
+    doc.setFont('helvetica','normal');
+    doc.text("1. Good once solid will not be taken back or exchanged.",margin+3,254)
+    doc.text("2. Subject to local jurisdiction only",margin+3,258)
+    doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,262)
+    doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,266)
     doc.save(`Invoice_${invoice.invoiceId}.pdf`);
   }
 
