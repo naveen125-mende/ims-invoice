@@ -66,40 +66,50 @@ export class AppComponent {
 
     doc.setFontSize(12);
     doc.setFont('helvetica','bold');
-    doc.text('TAX INVOICE', pageWidth / 2, 15, { align: 'center' });
-
+    doc.text('TAX INVOICE', pageWidth / 2, 10, { align: 'center' });
+    doc.rect(4,15,pageWidth-8,69);
     doc.setFontSize(10);
-    doc.text(`GSTIN/UIN:${invoice.gstin}`, 10, 15);
-    doc.text(`Orginal/Recipient`, 170, 15);
+    doc.setFont('helvetica','bold');
+    doc.text('devlats pvt ltd',6, 20,);
+    doc.setFont('helvetica','normal');
+    doc.text('Devlats',6, 24);
+    doc.text('Nizamabad It Hub', 6, 28);
+    doc.text('Mobile No: 9182029402, 9182029402', 6,32);
+    doc.text('Email:info@devlats.com', 6, 36);
+    doc.text(`GSTIN/UIN : ${this.invoiceDetails.gstin}`, 6,40);
     // const imageBase64 = await this.getImageAsBase64(imageUrl);
     // doc.addImage(imageBase64, 'JPEG', 17, 28, 16, 16);
-    doc.setFontSize(8);
-    doc.setFont('helvetica', 'bold');
-    doc.text(`Devlats`, pageWidth / 2, 22, { align: 'center' })
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Nizambad It Hub`, pageWidth / 2, 26, { align: 'center' })
-    doc.text(`Mobile No: 9182029402, 9182029402`, pageWidth / 2, 30, { align: 'center' })
-    doc.text(`Email:info@devlats.com`, pageWidth / 2, 34, { align: 'center' })
+    doc.setFont('helvetica','bold');     
+    doc.text('Buyer',6, 50, );
+    doc.text('Ganesh Ebterprises', 6, 54);
+     doc.setFont('helvetica','normal');
+    doc.text('Ganesh', 6,58 );
+    doc.text('Near Bus Stand Nizamabad', 6, 62);
+    doc.text('Mobile No: 919876543210', 6,66);
+     doc.text('Email:info@ganesh.com', 6,70);
+    doc.text(`GSTIN/UIN : ${this.invoiceDetails.gstin}`, 6,74);
+    
+    doc.setFont('helvetica','bold');
+    doc.rect((pageWidth/2)+9, 42,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2)+12, 48);
+    doc.text(`64`, (pageWidth/2) + 12, 53);
+    doc.rect((pageWidth/2)+9, 56,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2)+12, 62);
+    doc.text(`64`, (pageWidth/2) + 12, 67);
+    doc.rect((pageWidth/2)+9, 70,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2)+12, 76);
+    doc.text(`64`, (pageWidth/2) + 12, 81);
+    doc.rect((pageWidth/2)+55, 42,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2)+58, 48);
+    doc.text(`64`, (pageWidth/2)+58, 53);
+    doc.rect((pageWidth/2)+55, 56,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2)+58, 62);
+    doc.text(`64`, (pageWidth/2) +58, 67);
+    doc.rect((pageWidth/2) + 55, 70,46 ,14);
+    doc.text(`Invoice No. `, (pageWidth/2) + 58, 76);
+    doc.text(`64`, (pageWidth/2) + 58, 81);
 
-    doc.setFontSize(9);
-    doc.rect(margin, 40, 62, 24);
-    doc.text(`Billed By: Devlats`, margin + 2, 45);
-    doc.text(`Phone: ${billedBy.contactNumber}`, margin + 2, 50);
-    doc.text(`Email: ${billedBy.email || '-'}`, margin + 2, 55);
-    doc.text(`GST No: ${invoice.store.gstNumber || '-'}`, margin + 2, 60);
-    doc.rect(72, 40, 62, 24);
-    doc.text(`Billed To: ${billedTo.name}`, 75, 45);
-    doc.text(`Phone: ${billedTo.contactNumber}`, 75, 50);
-    doc.text(`Email: ${billedTo.email || '-'}`, 75, 55);
-    doc.text(`GST No: ${invoice.customer.gstNo || '-'}`, 75, 60);
-    doc.rect(134, 40, 62, 24);
-    doc.text(`Invoice No: ${invoice.invoiceId}`, 137, 45);
-    doc.text(`Date: ${formatDate(invoice.invoiceDate)}`, 137, 50);
-    doc.text(`Total Weight: ${invoice.weight} kg`, 137, 55);
-    doc.text(`Payment Mode: ${payments[0]?.paymentMode?.paymentModeName || '-'}`, 137, 60);
-
-    doc.rect(margin, 64, 186, 10);
-    doc.text('Notes :', margin + 2, 70);
+   
 
     const itemRows: any[] = [];
     let rowIndex = 1;
@@ -129,7 +139,7 @@ export class AppComponent {
     }, 0);
 
     autoTable(doc, {
-      startY: 78,
+      startY: 88,
       head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brean/Qlt', 'Qty', 'Unit', 'Rate', 'Disc', 'Amount']],
       body: itemRows,
       theme: 'grid',
@@ -142,8 +152,8 @@ export class AppComponent {
         fontSize: 9,
         cellPadding: 3
       },
-      tableWidth: 187,
-      margin: { left: 10 },
+      tableWidth: 198,
+      margin: { left:6},
 
       foot: [
         [
@@ -161,7 +171,7 @@ export class AppComponent {
       }
     });
     doc.setFont('helvetica','bold');
-    doc.text('E. & O. E', 184, 123);
+    doc.text('E. & O. E', 190, 135);
 
   const taxRows = this.invoiceDetails.taxItems.map(item => [
     item.hsnCode,
@@ -178,7 +188,7 @@ export class AppComponent {
     const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
 
     autoTable(doc, {
-      startY: 125,
+      startY: 140,
       theme: 'grid',
       head: [
         [
@@ -230,46 +240,46 @@ export class AppComponent {
         5: { halign: 'right' },
         6: { halign: 'right' }
       },
-      margin: { left: 10 },
-      tableWidth: 187
+      tableWidth: 198,
+      margin: { left:6},
     });
     doc.setFont('helvetica','normal');
     doc.setFontSize(10);
-    doc.text('Tax Amount  (in words) :',margin,182)
-    doc.text('INR Five thousand nine hundred Only :',margin,188)
+    doc.text('Tax Amount  (in words):',6,196)
+    doc.text('INR Five thousand nine hundred Only',6,202)
+    doc.text('Payment Type: Cash',6,208)
+    doc.text('Total Weight: 0.2kg',6,214)
     doc.setFont('helvetica','bold');
-    doc.text("Company's Bank Details",margin,200)
+    doc.text("Company's Bank Details",6,224)
     doc.setFont('helvetica','normal');
-    doc.text('Bank Name: Axis Bank',margin,206)
-    doc.text('A/c No : 00000000',margin,212)
-    doc.text('Branch & IFS CODE : 357657',margin,218)
+    doc.text('Bank Name: Axis Bank',6,230)
+    doc.text('A/c No : 00000000',6,236)
+    doc.text('Branch & IFS CODE : 357657',6,242)
     doc.setFontSize(8);
     doc.setFont('helvetica','bold');
-    doc.text(`Sub Total : ${this.invoiceDetails.subTotal}`,155,182)
-    doc.text(`Discount: ${this.invoiceDetails.discount}`,155,187)
-    doc.text(`Transport Charges: ${this.invoiceDetails.transportCharges}`,155,192)
-    doc.text(`Loading Charges : ${this.invoiceDetails.loadingCharges}`,155,197)
-    doc.text(`UnLoading Charges : ${this.invoiceDetails.unloadingCharges}`,155,202)
-    doc.text(`Total Amount : ${this.invoiceDetails.totalAmount}`,155,208)
-    doc.text(`Paid Amount : ${this.invoiceDetails.paidAmount}`,155,213)
-    doc.text(`Remaining Amount : ${this.invoiceDetails.remainingAmount}`,155,218
+    doc.text(`Sub Total : ${this.invoiceDetails.subTotal}`,155,196)
+    doc.text(`Discount: ${this.invoiceDetails.discount}`,155,202)
+    doc.text(`Transport Charges: ${this.invoiceDetails.transportCharges}`,155,208)
+    doc.text(`Loading Charges : ${this.invoiceDetails.loadingCharges}`,155,214)
+    doc.text(`UnLoading Charges : ${this.invoiceDetails.unloadingCharges}`,155,220)
+    doc.text(`Total Amount : ${this.invoiceDetails.totalAmount}`,155,226)
+    doc.text(`Paid Amount (19/07/2025) : ${this.invoiceDetails.paidAmount}`,155,232)
+    doc.text(`Remaining Amount : ${this.invoiceDetails.remainingAmount}`,155,238
 )
     doc.setFont('helvetica','bold');
-    doc.setFontSize(12);
-    doc.text('For Your Company Name',margin,250)
-    doc.line(120, 246, 150, 246);
-    doc.line(165, 246, 195, 246);
+    doc.setFontSize(10);
+    doc.text('For National Entreprises',158,254)
+    doc.line(155, 264, 195, 264);
     doc.setFontSize(8);
     doc.setFont('helvetica','bold');
-    doc.text("Reciever's Signature",120,250)
-    doc.text("Authorised signatory",165,250)
-    doc.rect(margin,255,187,25);
-    doc.text("Terms & Conditions :-",margin+2,260)
+    doc.text("Authorised signatory",162,268)
+    doc.rect(4,276,202,12);
+    doc.text("Declaration",8,280)
     doc.setFont('helvetica','normal');
-    doc.text("1. Good once solid will not be taken back or exchanged.",margin+3,264)
-    doc.text("2. Subject to local jurisdiction only",margin+3,268)
-    doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,272)
-    doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,276)
+    doc.text("We declare that this invoice shows the actual ptice of the goods described and that all particulars are true and correct.",8,284)
+    doc.text("This is a Computer Generated Invoice",pageWidth / 2, 292, { align: 'center' })
+    // doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,272)
+    // doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,276)
     doc.save(`Invoice_${invoice.invoiceId}.pdf`);
   }
 
