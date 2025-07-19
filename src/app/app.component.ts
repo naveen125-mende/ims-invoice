@@ -101,6 +101,7 @@ export class AppComponent {
     doc.text('INVOICE Details', col3X, sectionY);
     doc.text(downloadData.invoiceData.invoiceId, col3X, sectionY + lineGap);
     doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
     doc.text(`Date: ${downloadData.invoiceData.invoiceDate}`, col3X, sectionY + lineGap * 2);
     doc.text(`Payment Mode: ${downloadData.invoiceData.paymentMode}`, col3X, sectionY + lineGap * 3);
     doc.text(`Total Weight: ${downloadData.invoiceData.totalWeight} kg`, col3X, sectionY + lineGap * 4);
@@ -138,7 +139,7 @@ export class AppComponent {
       body: itemRows,
       theme: 'grid',
       headStyles: {
-        fillColor: [230, 230, 230],
+        fillColor: [230, 240, 255],
         textColor: 0,
         halign: 'center'
       },
@@ -157,7 +158,7 @@ export class AppComponent {
       ],
 
       footStyles: {
-        fillColor: [230, 230, 230],
+        fillColor: [230, 240, 255],
         fontStyle: 'bold',
         textColor: 20,
         halign: 'right'
@@ -233,37 +234,43 @@ export class AppComponent {
       margin: { left: 10 }
     });
 
-    doc.rect(135,124,65,68)
-    doc.text("Sub Total", 140,132);
-    doc.text(`${this.invoiceDetails.subTotal}`, 180,132);
-    doc.text("Discont", 140,140);
-    doc.text(`${this.invoiceDetails.discount}`, 180,140);
-    doc.text("Transport Charges", 140,148);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 180,148);
-    doc.text("Loading Charges", 140,156);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 180,156);
-    doc.text("UnLoading Charges", 140,162);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 180,162);
-    doc.text("Total Amount", 140,170);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 180,170);
-    doc.text("Paid Amount", 140,178);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 180,178);
-    doc.text("Remaining Amount", 140,186);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 180,186);
+    doc.rect(135, 124, 65, 68)
+    doc.text("Sub Total", 140, 132);
+    doc.text(`${this.invoiceDetails.subTotal}`, 180, 132);
+    doc.text("Discont", 140, 140);
+    doc.text(`${this.invoiceDetails.discount}`, 180, 140);
+    doc.text("Transport Charges", 140, 148);
+    doc.text(`${this.invoiceDetails.transportCharges}`, 180, 148);
+    doc.text("Loading Charges", 140, 156);
+    doc.text(`${this.invoiceDetails.loadingCharges}`, 180, 156);
+    doc.text("UnLoading Charges", 140, 162);
+    doc.text(`${this.invoiceDetails.unloadingCharges}`, 180, 162);
+    doc.text("Total Amount", 140, 170);
+    doc.text(`${this.invoiceDetails.totalAmount}`, 180, 170);
+    doc.text("Paid Amount", 140, 178);
+    doc.text(`${this.invoiceDetails.paidAmount}`, 180, 178);
+    doc.text("Remaining Amount", 140, 186);
+    doc.text(`${this.invoiceDetails.remainingAmount}`, 180, 186);
 
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text('Tax Amount  (in words):', 10, 196)
+    doc.text('INR Five thousand nine hundred Only', 10, 202)
+    doc.text('Payment Type: Cash', 10, 208)
+    doc.text('Total Weight: 0.2kg', 10, 214)
     const bottomMargin = 10;
     const footerStartY = pageHeight - bottomMargin - 62;
 
     doc.setFont('helvetica', 'bold');
-    doc.text("Company's Bank Details", 15, footerStartY);
+    doc.text("Company's Bank Details", 10, footerStartY);
 
     doc.setFont('helvetica', 'normal');
     doc.setDrawColor(180, 180, 180);
     doc.setFillColor(230, 240, 255); // Light blue background
-    doc.rect(15, footerStartY + 3, 80, 22, 'F'); // Bank box with fill
-    doc.text('Bank Name: Axis Bank', 18, footerStartY + 10);
-    doc.text('A/C No.: 0000000000', 18, footerStartY + 15);
-    doc.text('Branch & IFS Code: 357657', 18, footerStartY + 20);
+    doc.rect(10, footerStartY + 3, 80, 22, 'F'); // Bank box with fill
+    doc.text('Bank Name: Axis Bank', 12, footerStartY + 10);
+    doc.text('A/C No.: 0000000000', 12, footerStartY + 15);
+    doc.text('Branch & IFS Code: 357657', 12, footerStartY + 20);
 
     doc.setFont('helvetica', 'bold');
     doc.text('Authorization', pageWidth / 4 + 60, footerStartY);
@@ -273,15 +280,15 @@ export class AppComponent {
     doc.text('Authorised Signatory', pageWidth / 4 + 100, footerStartY + 22);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('Terms and Conditions:', 15, footerStartY + 32);
+    doc.text('Terms and Conditions:', 10, footerStartY + 32);
 
     doc.setFont('helvetica', 'normal');
-    doc.text('1. Good once sold will not be taken back or exchanged.', 15, footerStartY + 38);
-    doc.text('2. Subject to local jurisdiction only.', 15, footerStartY + 43);
+    doc.text('1. Good once sold will not be taken back or exchanged.', 10, footerStartY + 38);
+    doc.text('2. Subject to local jurisdiction only.', 10, footerStartY + 43);
     doc.setFont('helvetica', 'bold');
-    doc.text('3. NO CLAIM SHALL BE ENTERTAINED AFTER LEAVING THE TILES', 15, footerStartY + 48);
+    doc.text('3. NO CLAIM SHALL BE ENTERTAINED AFTER LEAVING THE TILES', 10, footerStartY + 48);
     doc.setFont('helvetica', 'normal');
-    doc.text('4. Returns of goods will be accepted within 7 days from the date of purchase.', 15, footerStartY + 53);
+    doc.text('4. Returns of goods will be accepted within 7 days from the date of purchase.', 10, footerStartY + 53);
 
     doc.setFont('helvetica', 'bold');
     doc.text('Thank you for your business!', pageWidth / 2, pageHeight - 10, { align: 'center' });
