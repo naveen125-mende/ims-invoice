@@ -27,18 +27,14 @@ export const InvoiceDetails = {
         {
             hsnCode: '1005',
             taxableValue: 3500,
-            centralTaxRate: 10,
             centralTaxAmount: 350,
-            stateTaxRate: 10,
             stateTaxAmount: 350,
             totalTaxAmount: 700
         },
         {
             hsnCode: '1006',
             taxableValue: 2500,
-            centralTaxRate: 10,
             centralTaxAmount: 250,
-            stateTaxRate: 10,
             stateTaxAmount: 250,
             totalTaxAmount: 500
         }
