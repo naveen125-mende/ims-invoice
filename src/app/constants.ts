@@ -89,10 +89,10 @@ export const InvoiceDetails= {
     ],
     "customer": {
         "customerId": "25629386-9cf9-432f-a8af-24ceace30b20",
-        "customerName": "Sanith",
+        "customerName": "Ram",
         "customerType": "B2B",
-        "contactNumber": "8978787888",
-        "gstNo": null,
+        "contactNumber": "9182020000",
+        "gstNo": "99AAACH7409R1ZX",
         "email": null,
         "address": null,
         "organizationId": "2968c945-6bad-4995-80d2-92eb573dcc4e",
