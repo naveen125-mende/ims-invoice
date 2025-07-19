@@ -3,6 +3,7 @@ import { InvoiceDetails } from './constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { formatNumber } from '@angular/common';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +60,8 @@ export class AppComponent {
         maximumFractionDigits: 2
       });
     };
-
+ 
+  
     doc.rect(2, 2, pageWidth - 4, pageHeight - 4,)
 
     doc.setFontSize(12);
@@ -234,39 +236,40 @@ export class AppComponent {
     doc.setFont('helvetica','normal');
     doc.setFontSize(10);
     doc.text('Tax Amount  (in words) :',margin,182)
-    doc.text('INR Five thousand nine hundred Only :',margin,186)
+    doc.text('INR Five thousand nine hundred Only :',margin,188)
     doc.setFont('helvetica','bold');
-    doc.text("Company's Bank Details",margin,198)
+    doc.text("Company's Bank Details",margin,200)
     doc.setFont('helvetica','normal');
-    doc.text('Bank Name: Axis Bank',margin,202)
-    doc.text('A/c No : 00000000',margin,206)
-    doc.text('Branch & IFS CODE : 357657',margin,210)
+    doc.text('Bank Name: Axis Bank',margin,206)
+    doc.text('A/c No : 00000000',margin,212)
+    doc.text('Branch & IFS CODE : 357657',margin,218)
     doc.setFontSize(8);
     doc.setFont('helvetica','bold');
-    doc.text('Sub Total : 12,000.00',155,182)
-    doc.text('Discount: 357657',155,186)
-    doc.text('Transport Charges: 357657',155,190)
-    doc.text('Loading Charges : 357657',155,194)
-    doc.text('UnLoading Charges : 357657',155,198)
-    doc.text('Total Amount : 52172',155,202)
-    doc.text('Paid Amount :  3241235325',155,206)
-    doc.text('Remaining Amount : 23453',155,210)
+    doc.text(`Sub Total : ${this.invoiceDetails.subTotal}`,155,182)
+    doc.text(`Discount: ${this.invoiceDetails.discount}`,155,187)
+    doc.text(`Transport Charges: ${this.invoiceDetails.transportCharges}`,155,192)
+    doc.text(`Loading Charges : ${this.invoiceDetails.loadingCharges}`,155,197)
+    doc.text(`UnLoading Charges : ${this.invoiceDetails.unloadingCharges}`,155,202)
+    doc.text(`Total Amount : ${this.invoiceDetails.totalAmount}`,155,208)
+    doc.text(`Paid Amount : ${this.invoiceDetails.paidAmount}`,155,213)
+    doc.text(`Remaining Amount : ${this.invoiceDetails.remainingAmount}`,155,218
+)
     doc.setFont('helvetica','bold');
     doc.setFontSize(12);
-    doc.text('For Your Company Name',margin,242)
-    doc.line(120, 238, 150, 238);
-    doc.line(165, 238, 195, 238);
+    doc.text('For Your Company Name',margin,250)
+    doc.line(120, 246, 150, 246);
+    doc.line(165, 246, 195, 246);
     doc.setFontSize(8);
     doc.setFont('helvetica','bold');
-    doc.text("Reciever's Signature",120,242)
-    doc.text("Authorised signatory",165,242)
-    doc.rect(margin,245,187,25);
-    doc.text("Terms & Conditions :-",margin+2,250)
+    doc.text("Reciever's Signature",120,250)
+    doc.text("Authorised signatory",165,250)
+    doc.rect(margin,255,187,25);
+    doc.text("Terms & Conditions :-",margin+2,260)
     doc.setFont('helvetica','normal');
-    doc.text("1. Good once solid will not be taken back or exchanged.",margin+3,254)
-    doc.text("2. Subject to local jurisdiction only",margin+3,258)
-    doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,262)
-    doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,266)
+    doc.text("1. Good once solid will not be taken back or exchanged.",margin+3,264)
+    doc.text("2. Subject to local jurisdiction only",margin+3,268)
+    doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,272)
+    doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,276)
     doc.save(`Invoice_${invoice.invoiceId}.pdf`);
   }
 
