@@ -62,10 +62,6 @@ export class AppComponent {
     doc.text(`Invoice #: ${downloadData.invoiceData.invoiceId}`, pageWidth - 15, 24, { align: 'right' });
     doc.text(`Date: ${downloadData.invoiceData.invoiceDate}`, pageWidth - 15, 30, { align: 'right' });
     doc.text(`GSTIN: ${downloadData.invoiceData.store.gstin}`, pageWidth - 15, 36, { align: 'right' });
-    // ...existing code...
-    // ...existing code...
-
-    // ...existing code...
 
     // Column positions
     const col1X = 10;
@@ -148,30 +144,36 @@ export class AppComponent {
       headStyles: {
         fillColor: [246, 248, 251],
         textColor: 0,
-        halign: 'left',
+        halign: 'left' // default alignment
       },
       styles: {
         fontSize: 9,
         cellPadding: 3
       },
+      columnStyles: {
+        8: { halign: 'right' } // Right-align body & footer of Amount
+      },
       tableWidth: 190,
       margin: { left: 10 },
       foot: [
         [
-          '', '', '', '', '', '', '', // 7 empty cells
-          { content: 'Total', styles: { halign: 'right', fontStyle: 'bold' } }, // 8th cell
-          totalAmount.toFixed(2) // 9th cell (amount total)
+          '', '', '', '', '', '', '',
+          { content: 'Total', styles: { halign: 'right', fontStyle: 'bold' } },
+          totalAmount.toFixed(2)
         ]
       ],
-
       footStyles: {
         fillColor: [246, 248, 251],
         fontStyle: 'bold',
-        textColor: 20,
-        halign: 'left'
+        textColor: 20
+      },
+      didDrawCell: function (data) {
+        // Check if we are in the header and Amount column (index 8)
+        if (data.section === 'head' && data.column.index === 8) {
+          data.cell.styles.halign = 'right';
+        }
       }
     });
-
 
     const formatNumber = (num: number): string => {
       return num.toLocaleString('en-IN', {
