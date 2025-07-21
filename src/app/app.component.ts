@@ -78,8 +78,10 @@ export class AppComponent {
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0); // Black color
     doc.text('BILLED BY', col1X, sectionY);
+    doc.setFontSize(12);
     doc.text(downloadData.billedBy.name, col1X, sectionY + lineGap);
     doc.setFontSize(10);
+    doc.setTextColor(96, 115, 155);
     doc.text('Nizamabad IT Hub', col1X, sectionY + lineGap * 2);
     doc.text(`Phone: ${downloadData.billedBy.contactNumber}`, col1X, sectionY + lineGap * 3);
     doc.text(`Email: ${downloadData.billedBy.email}`, col1X, sectionY + lineGap * 4);
@@ -89,8 +91,10 @@ export class AppComponent {
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0); // Black color
     doc.text('BILLED TO', col2X, sectionY);
+    doc.setFontSize(12);
     doc.text(downloadData.billedTo.name, col2X, sectionY + lineGap);
     doc.setFontSize(10);
+    doc.setTextColor(96, 115, 155);
     doc.text(`Phone: ${downloadData.billedTo.contactNumber}`, col2X, sectionY + lineGap * 2);
     doc.text(`Email: ${downloadData.billedTo.email}`, col2X, sectionY + lineGap * 3);
     doc.text(`GSTIN: ${downloadData.invoiceData.customer.gstin}`, col2X, sectionY + lineGap * 4);
@@ -99,9 +103,10 @@ export class AppComponent {
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0); // Black color
     doc.text('INVOICE Details', col3X, sectionY);
+    doc.setFontSize(12);
     doc.text(downloadData.invoiceData.invoiceId, col3X, sectionY + lineGap);
     doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(96, 115, 155);
     doc.text(`Date: ${downloadData.invoiceData.invoiceDate}`, col3X, sectionY + lineGap * 2);
     doc.text(`Payment Mode: ${downloadData.invoiceData.paymentMode}`, col3X, sectionY + lineGap * 3);
     doc.text(`Total Weight: ${downloadData.invoiceData.totalWeight} kg`, col3X, sectionY + lineGap * 4);
@@ -128,20 +133,22 @@ export class AppComponent {
         ]);
       });
     });
-
+    doc.setDrawColor(238, 238, 238);   // Blue color
+    doc.setLineWidth(0.5);           // Thickness of 1.5 units
+    doc.line(10, 80, pageWidth - 10, 80);
     const totalQuantity = this.invoiceDetails.saleItems.reduce((sum: number, item: any) => {
       return sum + item.quantity;
     }, 0);
 
     autoTable(doc, {
-      startY: 80,
+      startY: 83,
       head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brean/Qlt', 'Qty', 'Unit', 'Rate', 'Disc', 'Amount']],
       body: itemRows,
       theme: 'grid',
       headStyles: {
-        fillColor: [230, 240, 255],
+        fillColor: [246, 248, 251],
         textColor: 0,
-        halign: 'center'
+        halign: 'left',
       },
       styles: {
         fontSize: 9,
@@ -158,10 +165,10 @@ export class AppComponent {
       ],
 
       footStyles: {
-        fillColor: [230, 240, 255],
+        fillColor: [246, 248, 251],
         fontStyle: 'bold',
         textColor: 20,
-        halign: 'right'
+        halign: 'left'
       }
     });
 
@@ -196,7 +203,7 @@ export class AppComponent {
 
       // Correct footer: 5 fields, totals aligned
       foot: [[
-        { content: 'Total', styles: { fontStyle: 'bold', halign: 'right' } },
+        { content: 'Total', styles: { fontStyle: 'bold', halign: 'left' } },
         { content: formatNumber(totalTaxable), styles: { fontStyle: 'bold' } },
         { content: formatNumber(totalCentral), styles: { fontStyle: 'bold' } },
         { content: formatNumber(totalState), styles: { fontStyle: 'bold' } },
@@ -204,60 +211,88 @@ export class AppComponent {
       ]],
 
       headStyles: {
-        fillColor: [255, 255, 255],
+        fillColor: [246, 248, 251],
         textColor: [0, 0, 0],
         fontStyle: 'bold',
-        halign: 'center',
+        halign: 'left',
         valign: 'middle'
       },
       footStyles: {
-        fillColor: [255, 255, 255],
+        fillColor: [246, 248, 251],
         fontStyle: 'bold',
         textColor: 20,
-        halign: 'right'
+        halign: 'left',
       },
       styles: {
         fontSize: 9,
-        lineColor: [0, 0, 0],
-        lineWidth: 0.2,
+        // lineColor: [0, 0, 0],
+        // lineWidth: 0.2,
         cellPadding: 3,
-        halign: 'right',
+        halign: 'left',
         valign: 'middle'
       },
       columnStyles: {
-        1: { halign: 'right' },
-        2: { halign: 'right' },
-        3: { halign: 'right' },
-        4: { halign: 'right' }
+        1: { halign: 'left' },
+        2: { halign: 'left' },
+        3: { halign: 'left' },
+        4: { halign: 'left' }
       },
-      tableWidth: 120,
+      tableWidth: 122,
       margin: { left: 10 }
     });
 
-    doc.rect(135, 124, 65, 68)
-    doc.text("Sub Total", 140, 132);
-    doc.text(`${this.invoiceDetails.subTotal}`, 180, 132);
-    doc.text("Discont", 140, 140);
-    doc.text(`${this.invoiceDetails.discount}`, 180, 140);
-    doc.text("Transport Charges", 140, 148);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 180, 148);
-    doc.text("Loading Charges", 140, 156);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 180, 156);
+    // === Main Summary Box ===
+    doc.setFillColor(246, 248, 251); // Light background
+    doc.setDrawColor(230, 234, 244);       // Border color
+    doc.roundedRect(135, 124, 65, 68, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
+
+    // === Text inside box ===
+    doc.setTextColor(0);
+    doc.setFontSize(10);
+
+    doc.text("Sub Total", 140, 130);
+    doc.text(`${this.invoiceDetails.subTotal}`, 185, 130);
+
+    doc.text("Discount", 140, 138);
+    doc.text(`${this.invoiceDetails.discount}`, 191, 138);
+
+    doc.text("Transport Charges", 140, 146);
+    doc.text(`${this.invoiceDetails.transportCharges}`, 191, 146);
+
+    doc.text("Loading Charges", 140, 154);
+    doc.text(`${this.invoiceDetails.loadingCharges}`, 191, 154);
+
     doc.text("UnLoading Charges", 140, 162);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 180, 162);
+    doc.text(`${this.invoiceDetails.unloadingCharges}`, 191, 162);
+
+    // === Total Amount Bar ===
+    doc.setFillColor(0, 112, 192); // Blue background
+    doc.roundedRect(138, 165, 60, 8, 2, 2, 'F'); // Rounded bar
+    doc.setTextColor(255, 255, 255);
     doc.text("Total Amount", 140, 170);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 180, 170);
+    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 170);
+
+    // === Remaining Info ===
+    doc.setTextColor(0, 0, 0);
     doc.text("Paid Amount", 140, 178);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 180, 178);
+    doc.setFontSize(8);
+    doc.text("(20/06/2025)", 161, 178);
+    doc.setFontSize(10);
+    doc.text(`${this.invoiceDetails.paidAmount}`, 185, 178);
+
     doc.text("Remaining Amount", 140, 186);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 180, 186);
+    doc.text(`${this.invoiceDetails.remainingAmount}`, 191, 186);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.text('Tax Amount  (in words):', 10, 196)
-    doc.text('INR Five thousand nine hundred Only', 10, 202)
-    doc.text('Payment Type: Cash', 10, 208)
-    doc.text('Total Weight: 0.2kg', 10, 214)
+    doc.text('Tax Amount  (in words):', 10, 186)
+    doc.text('INR Five thousand nine hundred Only', 10, 192)
+    doc.text('Payment Type: Cash', 10, 198)
+    doc.text('Total Weight: 0.2kg', 10, 204)
+    doc.setFontSize(12);
+    doc.setTextColor(0, 112, 192);
+    doc.text('Payment Status: Received', 10, 210)
+    doc.setTextColor(0);
     const bottomMargin = 10;
     const footerStartY = pageHeight - bottomMargin - 62;
 
@@ -266,20 +301,40 @@ export class AppComponent {
 
     doc.setFont('helvetica', 'normal');
     doc.setDrawColor(180, 180, 180);
-    doc.setFillColor(230, 240, 255); // Light blue background
-    doc.rect(10, footerStartY + 3, 80, 22, 'F'); // Bank box with fill
+
+    // Background color for box
+    doc.setFillColor(246, 248, 251);
+
+    // Border color (e.g., black)
+    doc.setDrawColor(230, 234, 244);
+
+    // Draw rounded rectangle (x, y, width, height, rx, ry, style)
+    doc.roundedRect(10, footerStartY + 3, 80, 22, 3, 3, 'FD');
+    // 'FD' means Fill + Draw (background + border)
+
+    // Add text inside
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0); // Black text
     doc.text('Bank Name: Axis Bank', 12, footerStartY + 10);
     doc.text('A/C No.: 0000000000', 12, footerStartY + 15);
     doc.text('Branch & IFS Code: 357657', 12, footerStartY + 20);
 
+    doc.setDrawColor(238, 238, 238);   // Blue color
+    doc.setLineWidth(0.5);           // Thickness of 1.5 units
+    doc.line(10, 218, pageWidth - 10, 218);
+
     doc.setFont('helvetica', 'bold');
-    doc.text('Authorization', pageWidth / 4 + 60, footerStartY);
+    doc.text('Authorization', pageWidth / 4 + 50, footerStartY);
+    doc.setDrawColor(238, 238, 238);   // Blue color
+    doc.setLineWidth(0.5);           // Thickness of 1.5 units
+    doc.line(100, footerStartY + 20, pageWidth - 10, footerStartY + 20);
 
     doc.setFont('helvetica', 'normal');
-    doc.text("Receiver's Signature", pageWidth / 4 + 60, footerStartY + 22);
-    doc.text('Authorised Signatory', pageWidth / 4 + 100, footerStartY + 22);
+    doc.text("Receiver's Signature", pageWidth / 4 + 50, footerStartY + 25);
+    doc.text('Authorised Signatory', pageWidth / 4 + 100, footerStartY + 25);
 
     doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
     doc.text('Terms and Conditions:', 10, footerStartY + 32);
 
     doc.setFont('helvetica', 'normal');
@@ -290,8 +345,12 @@ export class AppComponent {
     doc.setFont('helvetica', 'normal');
     doc.text('4. Returns of goods will be accepted within 7 days from the date of purchase.', 10, footerStartY + 53);
 
+    doc.setDrawColor(238, 238, 238);   // Blue color
+    doc.setLineWidth(0.5);           // Thickness of 1.5 units
+    doc.line(10, footerStartY + 57, pageWidth - 10, footerStartY + 57);
+
     doc.setFont('helvetica', 'bold');
-    doc.text('Thank you for your business!', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text('Thank you for your business!', pageWidth / 2, footerStartY + 65, { align: 'center' });
 
     doc.save(`Invoice_${downloadData.invoiceData.invoiceId}.pdf`);
   }
