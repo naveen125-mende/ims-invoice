@@ -44,7 +44,7 @@ export class AppComponent {
     doc.setTextColor(0, 0, 0);
 
     // Draw background color rectangle for header area
-    doc.setFillColor(0, 112, 192); // Light gray
+    doc.setFillColor(53, 53, 53); // Light gray
     doc.rect(10, 10, pageWidth - 20, 30, 'F'); // x, y, width, height, style 'F' for filled
     //Logo Image
 
@@ -77,7 +77,7 @@ export class AppComponent {
     doc.setFontSize(12);
     doc.text(downloadData.billedBy.name, col1X, sectionY + lineGap);
     doc.setFontSize(10);
-    doc.setTextColor(96, 115, 155);
+    doc.setTextColor(53, 53, 53);
     doc.text('Nizamabad IT Hub', col1X, sectionY + lineGap * 2);
     doc.text(`Phone: ${downloadData.billedBy.contactNumber}`, col1X, sectionY + lineGap * 3);
     doc.text(`Email: ${downloadData.billedBy.email}`, col1X, sectionY + lineGap * 4);
@@ -90,7 +90,7 @@ export class AppComponent {
     doc.setFontSize(12);
     doc.text(downloadData.billedTo.name, col2X, sectionY + lineGap);
     doc.setFontSize(10);
-    doc.setTextColor(96, 115, 155);
+    doc.setTextColor(53, 53, 53);
     doc.text(`Phone: ${downloadData.billedTo.contactNumber}`, col2X, sectionY + lineGap * 2);
     doc.text(`Email: ${downloadData.billedTo.email}`, col2X, sectionY + lineGap * 3);
     doc.text(`GSTIN: ${downloadData.invoiceData.customer.gstin}`, col2X, sectionY + lineGap * 4);
@@ -102,7 +102,7 @@ export class AppComponent {
     doc.setFontSize(12);
     doc.text(downloadData.invoiceData.invoiceId, col3X, sectionY + lineGap);
     doc.setFontSize(10);
-    doc.setTextColor(96, 115, 155);
+    doc.setTextColor(53, 53, 53);
     doc.text(`Date: ${downloadData.invoiceData.invoiceDate}`, col3X, sectionY + lineGap * 2);
     doc.text(`Payment Mode: ${downloadData.invoiceData.paymentMode}`, col3X, sectionY + lineGap * 3);
     doc.text(`Total Weight: ${downloadData.invoiceData.totalWeight} kg`, col3X, sectionY + lineGap * 4);
@@ -166,7 +166,7 @@ export class AppComponent {
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
-    doc.setTextColor(0, 112, 192);
+    doc.setTextColor(53, 53, 53);
     doc.text('Amount  (in words):', 10, 120)
     doc.text('INR Five thousand nine hundred', 10, 126)
 
