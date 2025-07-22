@@ -254,38 +254,38 @@ export class AppComponent {
     doc.setTextColor(0);
     doc.setFontSize(10);
 
-    doc.text("Sub Total", 140, 130);
-    doc.text(`${this.invoiceDetails.subTotal}`, 185, 130);
+    doc.text("Sub Total", 140, 132);
+    doc.text(`${this.invoiceDetails.subTotal}`, 185, 132);
 
-    doc.text("Discount", 140, 138);
-    doc.text(`${this.invoiceDetails.discount}`, 191, 138);
+    doc.text("Discount", 140, 140);
+    doc.text(`${this.invoiceDetails.discount}`, 191, 140);
 
-    doc.text("Transport Charges", 140, 146);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 191, 146);
+    doc.text("Transport Charges", 140, 148);
+    doc.text(`${this.invoiceDetails.transportCharges}`, 191, 148);
 
-    doc.text("Loading Charges", 140, 154);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 191, 154);
+    doc.text("Loading Charges", 140, 156);
+    doc.text(`${this.invoiceDetails.loadingCharges}`, 191, 156);
 
-    doc.text("UnLoading Charges", 140, 162);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 191, 162);
+    doc.text("UnLoading Charges", 140, 164);
+    doc.text(`${this.invoiceDetails.unloadingCharges}`, 191, 164);
 
     // === Total Amount Bar ===
     doc.setFillColor(0, 112, 192); // Blue background
-    doc.roundedRect(138, 165, 60, 8, 2, 2, 'F'); // Rounded bar
+    doc.roundedRect(138, 168, 60, 8, 2, 2, 'F'); // Rounded bar
     doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 140, 170);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 170);
+    doc.text("Total Amount", 140, 173);
+    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 173);
 
     // === Remaining Info ===
     doc.setTextColor(0, 0, 0);
-    doc.text("Paid Amount", 140, 178);
+    doc.text("Paid Amount", 140, 182);
     doc.setFontSize(8);
-    doc.text("(20/06/2025)", 161, 178);
+    doc.text("(20/06/2025)", 161, 182);
     doc.setFontSize(10);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 185, 178);
+    doc.text(`${this.invoiceDetails.paidAmount}`, 185, 182);
 
-    doc.text("Remaining Amount", 140, 186);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 191, 186);
+    doc.text("Remaining Amount", 140, 190);
+    doc.text(`${this.invoiceDetails.remainingAmount}`, 191, 190);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
