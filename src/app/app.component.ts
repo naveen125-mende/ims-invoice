@@ -145,12 +145,14 @@ export class AppComponent {
       body: itemRows,
       theme: 'grid',
       headStyles: {
-        fillColor: [230, 230, 230],
+        fillColor: [222, 222, 222],
         textColor: 0,
-        halign: 'center'
+        halign: 'right',
       },
       styles: {
-        fontSize: 9,
+        fontSize: 10,
+        textColor: 0,
+        halign: 'right',
         cellPadding: 3
       },
       tableWidth: 198,
@@ -165,14 +167,14 @@ export class AppComponent {
         ]
       ],
       footStyles: {
-        fillColor: [230, 230, 230],
+        fillColor: [222, 222, 222],
         fontStyle: 'bold',
         textColor: 20,
         halign: 'right'
       }
     });
     doc.setFont('helvetica', 'bold');
-    doc.text('E. & O. E', 190, 135);
+    doc.text('E. & O. E', 185, 135);
 
     const taxRows = this.invoiceDetails.taxItems.map(item => [
       item.hsnCode,
@@ -218,7 +220,7 @@ export class AppComponent {
         fillColor: [255, 255, 255],
         textColor: [0, 0, 0],
         fontStyle: 'bold',
-        halign: 'center',
+        halign: 'right',
         valign: 'middle'
       },
       footStyles: {
@@ -228,7 +230,8 @@ export class AppComponent {
         halign: 'right'
       },
       styles: {
-        fontSize: 9,
+        fontSize: 10,
+        textColor: [0, 0, 0],
         lineColor: [0, 0, 0],
         lineWidth: 0.2,
         cellPadding: 3,
