@@ -56,7 +56,7 @@ export class AppComponent {
     doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
-    doc.text('TAX INVOICE', pageWidth - 15, 18, { align: 'right' });
+    doc.text('Sale Invoice', pageWidth - 15, 18, { align: 'right' });
 
     doc.setFontSize(12);
     doc.text(`Invoice #: ${downloadData.invoiceData.invoiceId}`, pageWidth - 15, 24, { align: 'right' });
@@ -147,8 +147,9 @@ export class AppComponent {
         halign: 'left' // default alignment
       },
       styles: {
-        fontSize: 9,
-        cellPadding: 3
+        fontSize: 10,
+        cellPadding: 3,
+        textColor: [0, 0, 0],
       },
       columnStyles: {
         8: { halign: 'right' } // Right-align body & footer of Amount
@@ -198,7 +199,7 @@ export class AppComponent {
     const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
 
     autoTable(doc, {
-      startY: 124,
+      startY: 126,
       theme: 'grid',
       head: [['HSN/SAC', 'Taxable Value', 'Central Tax', 'State Tax', 'Total Tax Amount']],
       body: taxRows,
@@ -230,6 +231,7 @@ export class AppComponent {
         // lineColor: [0, 0, 0],
         // lineWidth: 0.2,
         cellPadding: 3,
+        textColor: [0, 0, 0],
         halign: 'left',
         valign: 'middle'
       },
@@ -246,7 +248,7 @@ export class AppComponent {
     // === Main Summary Box ===
     doc.setFillColor(246, 248, 251); // Light background
     doc.setDrawColor(230, 234, 244);       // Border color
-    doc.roundedRect(135, 124, 65, 68, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
+    doc.roundedRect(135, 126, 65, 68, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
 
     // === Text inside box ===
     doc.setTextColor(0);
