@@ -56,7 +56,7 @@ export class AppComponent {
     doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
-    doc.text('TAX INVOICE', pageWidth - 15, 18, { align: 'right' });
+    doc.text('Credit-Note Settle Invoice', pageWidth - 15, 18, { align: 'right' });
 
     doc.setFontSize(12);
     doc.text(`Invoice #: ${downloadData.invoiceData.invoiceId}`, pageWidth - 15, 24, { align: 'right' });
@@ -118,13 +118,12 @@ export class AppComponent {
         totalAmount += rowTotal;
         itemRows.push([
           rowIndex++,
-          itm.itemName,
-          itm.hsnCode,
-          itm.quality?.qualityName || '-',
-          saleItem.quantity,
-          itm.unit?.unitShortName || 'kg',
-          saleItem.salePrice.toFixed(2),
-          saleItem.discount + '%',
+          saleItem.customerName || '-',
+          saleItem.phoneNumber || '-',
+          itm.creditNoteDate || '-',
+          itm.settledDate || '-',
+          itm.creditNoteAmount || 'kg',
+          itm.settledAmount || 'kg',
           rowTotal.toFixed(2)
         ]);
       });
@@ -138,7 +137,7 @@ export class AppComponent {
 
     autoTable(doc, {
       startY: 83,
-      head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brean/Qlt', 'Qty', 'Unit', 'Rate', 'Disc', 'Amount']],
+      head: [['Sr.No', 'Customer Name', 'Phone Number', 'Credit-Note date', 'settled Date', 'Credit-Note Amount', 'Settled Amount']],
       body: itemRows,
       theme: 'grid',
       headStyles: {
@@ -155,18 +154,6 @@ export class AppComponent {
       },
       tableWidth: 190,
       margin: { left: 10 },
-      foot: [
-        [
-          '', '', '', '', '', '', '',
-          { content: 'Total', styles: { halign: 'right', fontStyle: 'bold' } },
-          totalAmount.toFixed(2)
-        ]
-      ],
-      footStyles: {
-        fillColor: [246, 248, 251],
-        fontStyle: 'bold',
-        textColor: 20
-      },
       didDrawCell: function (data) {
         // Check if we are in the header and Amount column (index 8)
         if (data.section === 'head' && data.column.index === 8) {
@@ -175,165 +162,29 @@ export class AppComponent {
       }
     });
 
-    const formatNumber = (num: number): string => {
-      return num.toLocaleString('en-IN', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-    };
-
-    // Correct the body: include all 5 columns
-    const taxRows = this.invoiceDetails.taxItems.map(item => [
-      item.hsnCode,
-      formatNumber(item.taxableValue),
-      formatNumber(item.centralTaxAmount),
-      formatNumber(item.stateTaxAmount),
-      formatNumber(item.totalTaxAmount)
-    ]);
-
-    // Totals
-    const totalTaxable = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.taxableValue, 0);
-    const totalCentral = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.centralTaxAmount, 0);
-    const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
-    const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
-
-    autoTable(doc, {
-      startY: 124,
-      theme: 'grid',
-      head: [['HSN/SAC', 'Taxable Value', 'Central Tax', 'State Tax', 'Total Tax Amount']],
-      body: taxRows,
-
-      // Correct footer: 5 fields, totals aligned
-      foot: [[
-        { content: 'Total', styles: { fontStyle: 'bold', halign: 'left' } },
-        { content: formatNumber(totalTaxable), styles: { fontStyle: 'bold' } },
-        { content: formatNumber(totalCentral), styles: { fontStyle: 'bold' } },
-        { content: formatNumber(totalState), styles: { fontStyle: 'bold' } },
-        { content: formatNumber(totalTaxAmount), styles: { fontStyle: 'bold' } }
-      ]],
-
-      headStyles: {
-        fillColor: [246, 248, 251],
-        textColor: [0, 0, 0],
-        fontStyle: 'bold',
-        halign: 'left',
-        valign: 'middle'
-      },
-      footStyles: {
-        fillColor: [246, 248, 251],
-        fontStyle: 'bold',
-        textColor: 20,
-        halign: 'left',
-      },
-      styles: {
-        fontSize: 9,
-        // lineColor: [0, 0, 0],
-        // lineWidth: 0.2,
-        cellPadding: 3,
-        halign: 'left',
-        valign: 'middle'
-      },
-      columnStyles: {
-        1: { halign: 'left' },
-        2: { halign: 'left' },
-        3: { halign: 'left' },
-        4: { halign: 'left' }
-      },
-      tableWidth: 122,
-      margin: { left: 10 }
-    });
-
-    // === Main Summary Box ===
-    doc.setFillColor(246, 248, 251); // Light background
-    doc.setDrawColor(230, 234, 244);       // Border color
-    doc.roundedRect(135, 124, 65, 68, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
-
-    // === Text inside box ===
-    doc.setTextColor(0);
-    doc.setFontSize(10);
-
-    doc.text("Sub Total", 140, 130);
-    doc.text(`${this.invoiceDetails.subTotal}`, 185, 130);
-
-    doc.text("Discount", 140, 138);
-    doc.text(`${this.invoiceDetails.discount}`, 191, 138);
-
-    doc.text("Transport Charges", 140, 146);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 191, 146);
-
-    doc.text("Loading Charges", 140, 154);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 191, 154);
-
-    doc.text("UnLoading Charges", 140, 162);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 191, 162);
-
-    // === Total Amount Bar ===
-    doc.setFillColor(0, 112, 192); // Blue background
-    doc.roundedRect(138, 165, 60, 8, 2, 2, 'F'); // Rounded bar
-    doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 140, 170);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 170);
-
-    // === Remaining Info ===
-    doc.setTextColor(0, 0, 0);
-    doc.text("Paid Amount", 140, 178);
-    doc.setFontSize(8);
-    doc.text("(20/06/2025)", 161, 178);
-    doc.setFontSize(10);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 185, 178);
-
-    doc.text("Remaining Amount", 140, 186);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 191, 186);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.text('Tax Amount  (in words):', 10, 186)
-    doc.text('INR Five thousand nine hundred Only', 10, 192)
-    doc.text('Payment Type: Cash', 10, 198)
-    doc.text('Total Weight: 0.2kg', 10, 204)
-    doc.setFontSize(12);
+    doc.setFontSize(14);
     doc.setTextColor(0, 112, 192);
-    doc.text('Payment Status: Received', 10, 210)
+    doc.text('Amount  (in words):', 10, 120)
+    doc.text('INR Five thousand nine hundred', 10, 126)
+
     doc.setTextColor(0);
     const bottomMargin = 10;
     const footerStartY = pageHeight - bottomMargin - 62;
 
-    doc.setFont('helvetica', 'bold');
-    doc.text("Company's Bank Details", 10, footerStartY);
 
-    doc.setFont('helvetica', 'normal');
-    doc.setDrawColor(180, 180, 180);
 
-    // Background color for box
-    doc.setFillColor(246, 248, 251);
-
-    // Border color (e.g., black)
-    doc.setDrawColor(230, 234, 244);
-
-    // Draw rounded rectangle (x, y, width, height, rx, ry, style)
-    doc.roundedRect(10, footerStartY + 3, 80, 22, 3, 3, 'FD');
-    // 'FD' means Fill + Draw (background + border)
-
-    // Add text inside
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0); // Black text
-    doc.text('Bank Name: Axis Bank', 12, footerStartY + 10);
-    doc.text('A/C No.: 0000000000', 12, footerStartY + 15);
-    doc.text('Branch & IFS Code: 357657', 12, footerStartY + 20);
-
-    doc.setDrawColor(238, 238, 238);   // Blue color
-    doc.setLineWidth(0.5);           // Thickness of 1.5 units
-    doc.line(10, 218, pageWidth - 10, 218);
 
     doc.setFont('helvetica', 'bold');
-    doc.text('Authorization', pageWidth / 4 + 50, footerStartY);
+    doc.text('Authorization', pageWidth / 4 + 50, footerStartY - 80);
     doc.setDrawColor(238, 238, 238);   // Blue color
     doc.setLineWidth(0.5);           // Thickness of 1.5 units
-    doc.line(100, footerStartY + 20, pageWidth - 10, footerStartY + 20);
+    doc.line(100, footerStartY - 60, pageWidth - 10, footerStartY - 60);
 
     doc.setFont('helvetica', 'normal');
-    doc.text("Receiver's Signature", pageWidth / 4 + 50, footerStartY + 25);
-    doc.text('Authorised Signatory', pageWidth / 4 + 100, footerStartY + 25);
+    doc.text("Receiver's Signature", pageWidth / 4 + 50, footerStartY - 55);
+    doc.text('Authorised Signatory', pageWidth / 4 + 100, footerStartY - 55);
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
