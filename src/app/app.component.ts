@@ -56,7 +56,7 @@ export class AppComponent {
     doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
-    doc.text('Sale Invoice', pageWidth - 15, 18, { align: 'right' });
+    doc.text('Return-Invoice', pageWidth - 15, 18, { align: 'right' });
 
     doc.setFontSize(12);
     doc.text(`Invoice #: ${downloadData.invoiceData.invoiceId}`, pageWidth - 15, 24, { align: 'right' });
@@ -248,7 +248,7 @@ export class AppComponent {
     // === Main Summary Box ===
     doc.setFillColor(246, 248, 251); // Light background
     doc.setDrawColor(230, 234, 244);       // Border color
-    doc.roundedRect(135, 126, 65, 68, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
+    doc.roundedRect(135, 126, 65, 26, 3, 3, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
 
     // === Text inside box ===
     doc.setTextColor(0);
@@ -257,35 +257,13 @@ export class AppComponent {
     doc.text("Sub Total", 140, 132);
     doc.text(`${this.invoiceDetails.subTotal}`, 185, 132);
 
-    doc.text("Discount", 140, 140);
-    doc.text(`${this.invoiceDetails.discount}`, 191, 140);
-
-    doc.text("Transport Charges", 140, 148);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 191, 148);
-
-    doc.text("Loading Charges", 140, 156);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 191, 156);
-
-    doc.text("UnLoading Charges", 140, 164);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 191, 164);
-
     // === Total Amount Bar ===
     doc.setFillColor(0, 112, 192); // Blue background
-    doc.roundedRect(138, 168, 60, 8, 2, 2, 'F'); // Rounded bar
+    doc.roundedRect(138, 138, 60, 8, 2, 2, 'F'); // Rounded bar
     doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 140, 173);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 173);
+    doc.text("Total Returned", 140, 143);
+    doc.text(`${this.invoiceDetails.totalAmount}`, 185, 143);
 
-    // === Remaining Info ===
-    doc.setTextColor(0, 0, 0);
-    doc.text("Paid Amount", 140, 182);
-    doc.setFontSize(8);
-    doc.text("(20/06/2025)", 161, 182);
-    doc.setFontSize(10);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 185, 182);
-
-    doc.text("Remaining Amount", 140, 190);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 191, 190);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
@@ -294,38 +272,11 @@ export class AppComponent {
     doc.text('Payment Type: Cash', 10, 198)
     doc.text('Total Weight: 0.2kg', 10, 204)
     doc.setFontSize(12);
-    doc.setTextColor(0, 112, 192);
-    doc.text('Payment Status: Received', 10, 210)
+
     doc.setTextColor(0);
     const bottomMargin = 10;
     const footerStartY = pageHeight - bottomMargin - 62;
 
-    doc.setFont('helvetica', 'bold');
-    doc.text("Company's Bank Details", 10, footerStartY);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setDrawColor(180, 180, 180);
-
-    // Background color for box
-    doc.setFillColor(246, 248, 251);
-
-    // Border color (e.g., black)
-    doc.setDrawColor(230, 234, 244);
-
-    // Draw rounded rectangle (x, y, width, height, rx, ry, style)
-    doc.roundedRect(10, footerStartY + 3, 80, 22, 3, 3, 'FD');
-    // 'FD' means Fill + Draw (background + border)
-
-    // Add text inside
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0); // Black text
-    doc.text('Bank Name: Axis Bank', 12, footerStartY + 10);
-    doc.text('A/C No.: 0000000000', 12, footerStartY + 15);
-    doc.text('Branch & IFS Code: 357657', 12, footerStartY + 20);
-
-    doc.setDrawColor(238, 238, 238);   // Blue color
-    doc.setLineWidth(0.5);           // Thickness of 1.5 units
-    doc.line(10, 218, pageWidth - 10, 218);
 
     doc.setFont('helvetica', 'bold');
     doc.text('Authorization', pageWidth / 4 + 50, footerStartY);
