@@ -147,6 +147,7 @@ export class AppComponent {
       },
       styles: {
         fontSize: 9,
+        textColor: 0,
         cellPadding: 3
       },
       columnStyles: {
