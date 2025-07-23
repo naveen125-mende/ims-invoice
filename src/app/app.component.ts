@@ -66,7 +66,7 @@ export class AppComponent {
 
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Return-Invoice', pageWidth / 2, 10, { align: 'center' });
+    doc.text('Credit-Note Settle Invoice', pageWidth / 2, 10, { align: 'center' });
     doc.rect(4, 15, pageWidth - 8, 69);
     doc.setFontSize(12);
 
@@ -190,6 +190,11 @@ export class AppComponent {
     const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
     const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
 
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Amount  (in words):', 6, 140)
+    doc.text('INR Five thousand nine hundred', 6, 146)
 
 
     doc.setTextColor(0, 0, 0);
