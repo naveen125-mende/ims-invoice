@@ -65,7 +65,7 @@ export class AppComponent {
     doc.rect(6, 6, pageWidth - 12, 58,)
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Sale Invoice', pageWidth / 2, 15, { align: 'center' });
+    doc.text('Purchase Invoice', pageWidth / 2, 15, { align: 'center' });
 
     doc.setFontSize(10);
     doc.text(`GSTIN/UIN:${invoice.gstin}`, 10, 15);
@@ -235,17 +235,12 @@ export class AppComponent {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Tax Amount  (in words):', 59, 176)
+    doc.text('Tax Amount  (in words):', 6, 176)
     doc.setFont('helvetica', 'normal');
-    doc.text('INR Five thousand nine hundred Only', 59, 182)
-    doc.text('Payment Type: Cash', 59, 188)
-    doc.text('Total Weight: 0.2kg', 59, 194)
-    doc.setFont('helvetica', 'bold');
-    doc.text("Company's Bank Details", 6, 176)
-    doc.setFont('helvetica', 'normal');
-    doc.text('Bank Name: Axis Bank', 6, 182)
-    doc.text('A/c No : 00000000', 6, 188)
-    doc.text('Branch & IFS CODE : 357657', 6, 194)
+    doc.text('INR Five thousand nine hundred Only', 6, 182)
+    doc.text('Payment Type: Cash', 6, 188)
+    doc.text('Total Weight: 0.2kg', 6, 194)
+
     doc.setFontSize(8);
     // === Main Summary Box ===
     doc.setFillColor(255, 255, 255); // Light background
