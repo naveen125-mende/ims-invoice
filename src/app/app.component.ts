@@ -66,7 +66,7 @@ export class AppComponent {
 
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Return-Invoice', pageWidth / 2, 10, { align: 'center' });
+    doc.text('Credit-Note Settle Invoic', pageWidth / 2, 10, { align: 'center' });
     doc.rect(4, 15, pageWidth - 8, 69);
     doc.setFontSize(12);
 
@@ -274,11 +274,11 @@ export class AppComponent {
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(12);
-    doc.text('For National Enterprises', 6, 240)
-    doc.line(6, 264, 43, 264);
+    doc.text('For National Enterprises', 139, 240)
+    doc.line(139, 264, 206, 264);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text("Authorised signatory", 6, 268)
+    doc.text("Authorised signatory", 139, 268)
     doc.rect(4, 276, 202, 12);
     doc.text("Declaration", 8, 280)
     doc.setFont('helvetica', 'normal');
