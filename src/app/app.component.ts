@@ -98,12 +98,63 @@ export class AppComponent {
     doc.text(`Payment Mode: ${payments[0]?.paymentMode?.paymentModeName || '-'}`, 142, 60);
 
 
+    const itemRows: any[] = [];
+    let rowIndex = 1;
+    let totalAmount = 0;
+
+    this.invoiceDetails.saleItems.forEach((saleItem: any) => {
+      saleItem.item.forEach((itm: any) => {
+        const rowTotal = saleItem.quantity * saleItem.salePrice;
+        totalAmount += rowTotal;
+        itemRows.push([
+          rowIndex++,
+          saleItem.customerName || '-',
+          saleItem.phoneNumber || '-',
+          itm.creditNoteDate || '-',
+          itm.settledDate || '-',
+          itm.creditNoteAmount || 'kg',
+          itm.settledAmount || 'kg',
+          rowTotal.toFixed(2)
+        ]);
+      });
+    });
+
+
+    autoTable(doc, {
+      startY: 68,
+      head: [['Sr.No', 'Customer Name', 'Phone Number', 'Credit-Note date', 'settled Date', 'Credit-Note Amount', 'Settled Amount']],
+      body: itemRows,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [222, 222, 222],
+        textColor: 0,
+        halign: 'left' // default alignment
+      },
+      styles: {
+        fontSize: 9,
+        textColor: 0,
+        cellPadding: 3
+      },
+      columnStyles: {
+        8: { halign: 'right' } // Right-align body & footer of Amount
+      },
+      tableWidth: 198,
+      margin: { left: 6 },
+      didDrawCell: function (data) {
+        // Check if we are in the header and Amount column (index 8)
+        if (data.section === 'head' && data.column.index === 8) {
+          data.cell.styles.halign = 'right';
+        }
+      }
+    });
+
+
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
-    doc.text('Amount  (in words):', 6, 176)
-    doc.text('INR Five thousand nine hundred', 6, 182)
+    doc.text('Amount  (in words):', 6, 106)
+    doc.text('INR Five thousand nine hundred', 6, 112)
 
     // === Remaining Info ===
     doc.setTextColor(0, 0, 0);
