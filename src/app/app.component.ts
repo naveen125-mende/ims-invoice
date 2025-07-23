@@ -66,7 +66,7 @@ export class AppComponent {
 
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Sale Invoice', pageWidth / 2, 10, { align: 'center' });
+    doc.text('Purchase Invoice', pageWidth / 2, 10, { align: 'center' });
     doc.rect(4, 15, pageWidth - 8, 69);
     doc.setFontSize(12);
 
@@ -250,17 +250,11 @@ export class AppComponent {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Tax Amount  (in words):', 59, 197)
+    doc.text('Tax Amount  (in words):', 6, 197)
     doc.setFont('helvetica', 'normal');
-    doc.text('INR Five thousand nine hundred Only', 59, 203)
-    doc.text('Payment Type: Cash', 59, 209)
-    doc.text('Total Weight: 0.2kg', 59, 215)
-    doc.setFont('helvetica', 'bold');
-    doc.text("Company's Bank Details", 6, 197)
-    doc.setFont('helvetica', 'normal');
-    doc.text('Bank Name: Axis Bank', 6, 203)
-    doc.text('A/c No : 00000000', 6, 209)
-    doc.text('Branch & IFS CODE : 357657', 6, 215)
+    doc.text('INR Five thousand nine hundred Only', 6, 203)
+    doc.text('Payment Type: Cash', 6, 209)
+    doc.text('Total Weight: 0.2kg', 6, 215)
     doc.setFontSize(8);
     // === Main Summary Box ===
     doc.setFillColor(255, 255, 255); // Light background
