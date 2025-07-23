@@ -139,7 +139,7 @@ export class AppComponent {
       body: itemRows,
       theme: 'grid',
       headStyles: {
-        fillColor: [246, 248, 251],
+        fillColor: [222, 222, 222],
         textColor: 0,
         halign: 'left' // default alignment
       },
