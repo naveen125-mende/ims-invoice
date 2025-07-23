@@ -66,7 +66,7 @@ export class AppComponent {
 
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Credit-Note Settle Invoic', pageWidth / 2, 10, { align: 'center' });
+    doc.text('Return Invoic', pageWidth / 2, 10, { align: 'center' });
     doc.rect(4, 15, pageWidth - 8, 69);
     doc.setFontSize(12);
 
@@ -268,6 +268,12 @@ export class AppComponent {
     doc.setTextColor(255, 255, 255);
     doc.text("Total Amount", 142, 210.5);
     doc.text(`${this.invoiceDetails.totalAmount}`, 192, 210.5);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Amount  (in words):', 6, 205)
+    doc.text('INR Five thousand nine hundred', 6, 211)
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(10);
