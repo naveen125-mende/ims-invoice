@@ -65,7 +65,7 @@ export class AppComponent {
     doc.rect(6, 6, pageWidth - 12, 58,)
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Purchase Invoice', pageWidth / 2, 15, { align: 'center' });
+    doc.text('Return-Invoice', pageWidth / 2, 15, { align: 'center' });
 
     doc.setFontSize(10);
     doc.text(`GSTIN/UIN:${invoice.gstin}`, 10, 15);
@@ -233,19 +233,15 @@ export class AppComponent {
       tableWidth: 198
     });
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Tax Amount  (in words):', 6, 176)
-    doc.setFont('helvetica', 'normal');
-    doc.text('INR Five thousand nine hundred Only', 6, 182)
-    doc.text('Payment Type: Cash', 6, 188)
-    doc.text('Total Weight: 0.2kg', 6, 194)
-
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Amount  (in words):', 6, 176)
+    doc.text('INR Five thousand nine hundred', 6, 182)
     doc.setFontSize(8);
     // === Main Summary Box ===
     doc.setFillColor(255, 255, 255); // Light background
     doc.setDrawColor(0, 0, 0);       // Border color
-    doc.roundedRect(139, 174, 65, 68, 0, 0, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
+    doc.roundedRect(139, 174, 65, 30, 0, 0, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
 
     // === Text inside box ===
     doc.setTextColor(0);
@@ -254,35 +250,19 @@ export class AppComponent {
     doc.text("Sub Total", 142, 182);
     doc.text(`${this.invoiceDetails.subTotal}`, 192, 182);
 
-    doc.text("Discount", 142, 190);
-    doc.text(`${this.invoiceDetails.discount}`, 199, 190);
 
-    doc.text("Transport Charges", 142, 198);
-    doc.text(`${this.invoiceDetails.transportCharges}`, 199, 198);
-
-    doc.text("Loading Charges", 142, 206);
-    doc.text(`${this.invoiceDetails.loadingCharges}`, 199, 206);
-
-    doc.text("UnLoading Charges", 142, 214);
-    doc.text(`${this.invoiceDetails.unloadingCharges}`, 199, 214);
 
     // === Total Amount Bar ===
     doc.setFillColor(53, 53, 53); // Dark gray background
-    doc.roundedRect(141, 217, 61, 8, 0, 0, 'F'); // Rounded bar
+    doc.roundedRect(141, 190, 61, 8, 0, 0, 'F'); // Rounded bar
     doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 142, 222);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 192, 222);
+    doc.text("Total Amount", 142, 196);
+    doc.text(`${this.invoiceDetails.totalAmount}`, 192, 196);
 
     // === Remaining Info ===
     doc.setTextColor(0, 0, 0);
-    doc.text("Paid Amount", 142, 230);
-    doc.setFontSize(8);
-    doc.text("(20/06/2025)", 167, 229.5);
     doc.setFontSize(10);
-    doc.text(`${this.invoiceDetails.paidAmount}`, 193.5, 230);
 
-    doc.text("Remaining Amount", 142, 236);
-    doc.text(`${this.invoiceDetails.remainingAmount}`, 199, 236);
 
 
     doc.setFont('helvetica', 'bold');
