@@ -112,69 +112,11 @@ export class AppComponent {
 
 
 
-    const itemRows: any[] = [];
-    let rowIndex = 1;
-    invoice.saleItems.forEach((saleItem: any) => {
-      saleItem.item.forEach((itm: any) => {
-        itemRows.push([
-          rowIndex++,
-          itm.itemName,
-          itm.hsnCode,
-          itm.quality?.qualityName || '-',
-          saleItem.quantity,
-          itm.unit?.unitShortName || 'kg',
-          saleItem.salePrice.toFixed(2),
-          saleItem.discount + '%',
-          (saleItem.quantity * saleItem.salePrice).toFixed(2)
-        ]);
-      });
-    });
 
-    // Calculate totals
-    const totalAmount = invoice.saleItems.reduce((sum: number, item: any) => {
-      return sum + item.quantity * item.salePrice;
-    }, 0);
 
-    const totalQuantity = invoice.saleItems.reduce((sum: number, item: any) => {
-      return sum + item.quantity;
-    }, 0);
 
-    autoTable(doc, {
-      startY: 88,
-      head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brean/Qlt', 'Qty', 'Unit', 'Rate', 'Disc', 'Amount']],
-      body: itemRows,
-      theme: 'grid',
-      headStyles: {
-        fillColor: [222, 222, 222],
-        textColor: 0,
-        halign: 'right',
-      },
-      styles: {
-        fontSize: 10,
-        textColor: 0,
-        halign: 'right',
-        cellPadding: 3
-      },
-      tableWidth: 198,
-      margin: { left: 6 },
 
-      foot: [
-        [
-          { content: 'Total', colSpan: 4, styles: { halign: 'right', fontStyle: 'bold' } },
-          totalQuantity.toString(),
-          '', '', '',
-          totalAmount.toFixed(2)
-        ]
-      ],
-      footStyles: {
-        fillColor: [222, 222, 222],
-        fontStyle: 'bold',
-        textColor: 20,
-        halign: 'right'
-      }
-    });
-    doc.setFont('helvetica', 'bold');
-    doc.text('E. & O. E', 185, 135);
+
 
     const taxRows = this.invoiceDetails.taxItems.map(item => [
       item.hsnCode,
