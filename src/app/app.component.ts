@@ -65,7 +65,7 @@ export class AppComponent {
     doc.rect(6, 6, pageWidth - 12, 58,)
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Return-Invoice', pageWidth / 2, 15, { align: 'center' });
+    doc.text('Credit-Note Settle Invoice', pageWidth / 2, 15, { align: 'center' });
 
     doc.setFontSize(10);
     doc.text(`GSTIN/UIN:${invoice.gstin}`, 10, 15);
@@ -97,167 +97,13 @@ export class AppComponent {
     doc.text(`Total Weight: ${invoice.weight} kg`, 142, 55);
     doc.text(`Payment Mode: ${payments[0]?.paymentMode?.paymentModeName || '-'}`, 142, 60);
 
-    const itemRows: any[] = [];
-    let rowIndex = 1;
-    invoice.saleItems.forEach((saleItem: any) => {
-      saleItem.item.forEach((itm: any) => {
-        itemRows.push([
-          rowIndex++,
-          itm.itemName,
-          itm.hsnCode,
-          itm.quality?.qualityName || '-',
-          saleItem.quantity,
-          itm.unit?.unitShortName || 'kg',
-          saleItem.salePrice.toFixed(2),
-          saleItem.discount + '%',
-          (saleItem.quantity * saleItem.salePrice).toFixed(2)
-        ]);
-      });
-    });
 
-    // Calculate totals
-    const totalAmount = invoice.saleItems.reduce((sum: number, item: any) => {
-      return sum + item.quantity * item.salePrice;
-    }, 0);
 
-    const totalQuantity = invoice.saleItems.reduce((sum: number, item: any) => {
-      return sum + item.quantity;
-    }, 0);
-
-    autoTable(doc, {
-      startY: 70,
-      head: [['Sr.No', 'Item Name', 'HSN/SAC', 'Brean/Qlt', 'Qty', 'Unit', 'Rate', 'Disc', 'Amount']],
-      body: itemRows,
-      theme: 'grid',
-      headStyles: {
-        fillColor: [222, 222, 222],
-        textColor: 0,
-        halign: 'right',
-      },
-      styles: {
-        halign: 'right',
-        fontSize: 10,
-        textColor: 0,
-        cellPadding: 3
-      },
-      tableWidth: 198,
-      margin: { left: 6 },
-
-      foot: [
-        [
-          { content: 'Total', colSpan: 4, styles: { halign: 'right', fontStyle: 'bold' } },
-          totalQuantity.toString(),
-          '', '', '',
-          totalAmount.toFixed(2)
-        ]
-      ],
-      footStyles: {
-        fillColor: [222, 222, 222],
-        fontStyle: 'bold',
-        textColor: 20,
-        halign: 'right'
-      }
-    });
-    doc.setFont('helvetica', 'bold');
-    doc.text('E. & O. E', 188, 116);
-
-    const taxRows = this.invoiceDetails.taxItems.map(item => [
-      item.hsnCode,
-      formatNumber(item.taxableValue),
-      `${item.centralTaxRate}%`,
-      formatNumber(item.centralTaxAmount),
-      `${item.stateTaxRate}%`,
-      formatNumber(item.stateTaxAmount),
-      formatNumber(item.totalTaxAmount)
-    ]);
-    const totalTaxable = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.taxableValue, 0);
-    const totalCentral = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.centralTaxAmount, 0);
-    const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
-    const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
-
-    autoTable(doc, {
-      startY: 118,
-      theme: 'grid',
-      head: [
-        [
-          { content: 'HSN/SAC', rowSpan: 2 },
-          { content: 'Taxable Value', rowSpan: 2 },
-          { content: 'Central tax', colSpan: 2 },
-          { content: 'Central tax', colSpan: 2 },
-          { content: 'Total Tax Amount', rowSpan: 2 }
-        ],
-        [
-          'Rate', 'Amount',
-          'Rate', 'Amount'
-        ]
-      ],
-      body: taxRows,
-      foot: [
-        [
-          { content: 'Total', styles: { fontStyle: 'bold', halign: 'right' } },
-          { content: formatNumber(totalTaxable), styles: { fontStyle: 'bold' } },
-          '', { content: formatNumber(totalCentral), styles: { fontStyle: 'bold' } },
-          '', { content: formatNumber(totalState), styles: { fontStyle: 'bold' } },
-          { content: formatNumber(totalTaxAmount), styles: { fontStyle: 'bold' } }
-        ]
-      ],
-      headStyles: {
-        fillColor: [255, 255, 255],
-        textColor: [0, 0, 0],
-        fontStyle: 'bold',
-        halign: 'right',
-        valign: 'middle'
-      },
-      footStyles: {
-        fillColor: [255, 255, 255],
-        fontStyle: 'bold',
-        textColor: 20,
-        halign: 'right'
-      },
-      styles: {
-        fontSize: 10,
-        textColor: [0, 0, 0],
-        lineColor: [0, 0, 0],
-        lineWidth: 0.2,
-        cellPadding: 3,
-        halign: 'right',
-        valign: 'middle'
-      },
-      columnStyles: {
-        1: { halign: 'right' },
-        3: { halign: 'right' },
-        5: { halign: 'right' },
-        6: { halign: 'right' }
-      },
-      margin: { left: 6 },
-      tableWidth: 198
-    });
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
     doc.text('Amount  (in words):', 6, 176)
     doc.text('INR Five thousand nine hundred', 6, 182)
-    doc.setFontSize(8);
-    // === Main Summary Box ===
-    doc.setFillColor(255, 255, 255); // Light background
-    doc.setDrawColor(0, 0, 0);       // Border color
-    doc.roundedRect(139, 174, 65, 30, 0, 0, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
-
-    // === Text inside box ===
-    doc.setTextColor(0);
-    doc.setFontSize(12);
-
-    doc.text("Sub Total", 142, 182);
-    doc.text(`${this.invoiceDetails.subTotal}`, 192, 182);
-
-
-
-    // === Total Amount Bar ===
-    doc.setFillColor(53, 53, 53); // Dark gray background
-    doc.roundedRect(141, 190, 61, 8, 0, 0, 'F'); // Rounded bar
-    doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 142, 196);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 192, 196);
 
     // === Remaining Info ===
     doc.setTextColor(0, 0, 0);
