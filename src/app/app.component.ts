@@ -111,6 +111,55 @@ export class AppComponent {
     doc.text(`64`, (pageWidth / 2) + 58, 81);
 
 
+    const itemRows: any[] = [];
+    let rowIndex = 1;
+    let totalAmount = 0;
+
+    this.invoiceDetails.saleItems.forEach((saleItem: any) => {
+      saleItem.item.forEach((itm: any) => {
+        const rowTotal = saleItem.quantity * saleItem.salePrice;
+        totalAmount += rowTotal;
+        itemRows.push([
+          rowIndex++,
+          saleItem.customerName || '-',
+          saleItem.phoneNumber || '-',
+          itm.creditNoteDate || '-',
+          itm.settledDate || '-',
+          itm.creditNoteAmount || 'kg',
+          itm.settledAmount || 'kg',
+          rowTotal.toFixed(2)
+        ]);
+      });
+    });
+
+
+    autoTable(doc, {
+      startY: 88,
+      head: [['Sr.No', 'Customer Name', 'Phone Number', 'Credit-Note date', 'settled Date', 'Credit-Note Amount', 'Settled Amount']],
+      body: itemRows,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [246, 248, 251],
+        textColor: 0,
+        halign: 'left' // default alignment
+      },
+      styles: {
+        fontSize: 9,
+        textColor: 0,
+        cellPadding: 3
+      },
+      columnStyles: {
+        8: { halign: 'right' } // Right-align body & footer of Amount
+      },
+      tableWidth: 202,
+      margin: { left: 4 },
+      didDrawCell: function (data) {
+        // Check if we are in the header and Amount column (index 8)
+        if (data.section === 'head' && data.column.index === 8) {
+          data.cell.styles.halign = 'right';
+        }
+      }
+    });
 
 
 
@@ -118,19 +167,7 @@ export class AppComponent {
 
 
 
-    const taxRows = this.invoiceDetails.taxItems.map(item => [
-      item.hsnCode,
-      formatNumber(item.taxableValue),
-      `${item.centralTaxRate}%`,
-      formatNumber(item.centralTaxAmount),
-      `${item.stateTaxRate}%`,
-      formatNumber(item.stateTaxAmount),
-      formatNumber(item.totalTaxAmount)
-    ]);
-    const totalTaxable = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.taxableValue, 0);
-    const totalCentral = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.centralTaxAmount, 0);
-    const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
-    const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
+
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
