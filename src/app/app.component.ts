@@ -190,95 +190,18 @@ export class AppComponent {
     const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
     const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
 
-    autoTable(doc, {
-      startY: 140,
-      theme: 'grid',
-      head: [
-        [
-          { content: 'HSN/SAC', rowSpan: 2 },
-          { content: 'Taxable Value', rowSpan: 2 },
-          { content: 'Central tax', colSpan: 2 },
-          { content: 'Central tax', colSpan: 2 },
-          { content: 'Total Tax Amount', rowSpan: 2 }
-        ],
-        [
-          'Rate', 'Amount',
-          'Rate', 'Amount'
-        ]
-      ],
-      body: taxRows,
-      foot: [
-        [
-          { content: 'Total', styles: { fontStyle: 'bold', halign: 'right' } },
-          { content: formatNumber(totalTaxable), styles: { fontStyle: 'bold' } },
-          '', { content: formatNumber(totalCentral), styles: { fontStyle: 'bold' } },
-          '', { content: formatNumber(totalState), styles: { fontStyle: 'bold' } },
-          { content: formatNumber(totalTaxAmount), styles: { fontStyle: 'bold' } }
-        ]
-      ],
-      headStyles: {
-        fillColor: [255, 255, 255],
-        textColor: [0, 0, 0],
-        fontStyle: 'bold',
-        halign: 'right',
-        valign: 'middle'
-      },
-      footStyles: {
-        fillColor: [255, 255, 255],
-        fontStyle: 'bold',
-        textColor: 20,
-        halign: 'right'
-      },
-      styles: {
-        fontSize: 10,
-        textColor: [0, 0, 0],
-        lineColor: [0, 0, 0],
-        lineWidth: 0.2,
-        cellPadding: 3,
-        halign: 'right',
-        valign: 'middle'
-      },
-      columnStyles: {
-        1: { halign: 'right' },
-        3: { halign: 'right' },
-        5: { halign: 'right' },
-        6: { halign: 'right' }
-      },
-      tableWidth: 198,
-      margin: { left: 6 },
-    });
 
-    doc.setFontSize(8);
-    // === Main Summary Box ===
-    doc.setFillColor(255, 255, 255); // Light background
-    doc.setDrawColor(0, 0, 0);       // Border color
-    doc.roundedRect(139, 194, 65, 23, 0, 0, 'FD'); // (x, y, w, h, rx, ry, Fill+Draw)
-
-    // === Text inside box ===
-    doc.setTextColor(0);
-    doc.setFontSize(12);
-
-    doc.text("Sub Total", 142, 202);
-    doc.text(`${this.invoiceDetails.subTotal}`, 192, 202);
-
-
-    // === Total Amount Bar ===
-    doc.setFillColor(53, 53, 53); // Dark gray background
-    doc.roundedRect(141, 205, 61, 8, 0, 0, 'F'); // Rounded bar
-    doc.setTextColor(255, 255, 255);
-    doc.text("Total Amount", 142, 210.5);
-    doc.text(`${this.invoiceDetails.totalAmount}`, 192, 210.5);
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(10);
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(12);
-    doc.text('For National Enterprises', 6, 240)
-    doc.line(6, 264, 43, 264);
+    doc.text('For National Enterprises', 139, 240)
+    doc.line(139, 264, 206, 264);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text("Authorised signatory", 6, 268)
+    doc.text("Authorised signatory", 139, 268)
     doc.rect(4, 276, 202, 12);
     doc.text("Declaration", 8, 280)
     doc.setFont('helvetica', 'normal');
