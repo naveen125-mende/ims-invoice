@@ -31,7 +31,7 @@ export const InvoiceDetails = {
             centralTaxAmount: 350,
             stateTaxRate: 10,
             stateTaxAmount: 350,
-            totalTaxAmount: 700
+            totalTaxAmount: 800
         },
         {
             hsnCode: '1006',

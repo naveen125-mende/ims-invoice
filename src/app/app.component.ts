@@ -101,30 +101,165 @@ export class AppComponent {
     doc.line(60, 50, 150, 50);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text('particulars', 62, 55);
-    doc.text('Rate', 100, 55);
-    doc.text('Qty', 115, 55);
-    doc.text('Amount', 130, 55);
-    doc.line(60, 57, 150, 57);
 
+    const itemRows: any[] = [];
+    let rowIndex = 1;
+    invoice.saleItems.forEach((saleItem: any) => {
+      saleItem.item.forEach((itm: any) => {
+        itemRows.push([
+          rowIndex++,
+          itm.itemName,
+          itm.hsnCode,
+          itm.quality?.qualityName || '-',
+          saleItem.quantity,
+          itm.unit?.unitShortName || 'kg',
+          saleItem.salePrice.toFixed(2),
+          saleItem.discount + '%',
+          (saleItem.quantity * saleItem.salePrice).toFixed(2)
+        ]);
+      });
+    });
 
+    const totalAmount = invoice.saleItems.reduce((sum: number, item: any) => {
+      return sum + item.quantity * item.salePrice;
+    }, 0);
 
+    const totalQuantity = invoice.saleItems.reduce((sum: number, item: any) => {
+      return sum + item.quantity;
+    }, 0);
 
+    autoTable(doc, {
+      startY: 55,
+      head: [['Sr.No', 'Item', 'Qty', 'Rate', 'Amount']],
+      body: itemRows,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [230, 230, 230],
+        textColor: 0,
+        halign: 'center'
+      },
+      styles: {
+        fontSize: 9,
+        cellPadding: 3
+      },
+      tableWidth: 90,
+      margin: { left: 60 },
 
-
-
-    doc.line(60, 205, 150, 205);
-
-    doc.setFontSize(15);
-    doc.text('60', 70, 212);
-    doc.text('TOTAL :', 90, 212);
-
-    doc.setFontSize(16);
+      foot: [
+        [
+          { content: 'Total', colSpan: 4, styles: { halign: 'right', fontStyle: 'bold' } },
+          totalQuantity.toString(),
+          '', '', '',
+          totalAmount.toFixed(2)
+        ]
+      ],
+      footStyles: {
+        fillColor: [230, 230, 230],
+        fontStyle: 'bold',
+        textColor: 20,
+        halign: 'right'
+      }
+    });
     doc.setFont('helvetica', 'bold');
-    doc.text('5,537.35', 125, 212);
+    doc.text('E. & O. E', 130, 100);
 
 
-    doc.line(60, 216, 150, 216);
+    const taxRows = this.invoiceDetails.taxItems.map(item => [
+      item.hsnCode,
+      formatNumber(item.taxableValue),
+      formatNumber(item.centralTaxAmount),
+      formatNumber(item.stateTaxAmount),
+      formatNumber(item.totalTaxAmount)
+    ]);
+
+    const totalTaxable = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.taxableValue, 0);
+    const totalCentral = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.centralTaxAmount, 0);
+    const totalState = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.stateTaxAmount, 0);
+    const totalTaxAmount = this.invoiceDetails.taxItems.reduce((sum, item) => sum + item.totalTaxAmount, 0);
+
+    autoTable(doc, {
+      startY: 105,
+      theme: 'grid',
+      head: [['HSN', 'Taxable Value', 'Central Tax', 'State Tax', 'Total Amount']],
+      body: taxRows,
+      foot: [
+        [
+          { content: 'Total', styles: { fontStyle: 'bold', halign: 'right' } },
+          { content: formatNumber(totalTaxable), styles: { fontStyle: 'bold' } },
+          { content: formatNumber(totalCentral), styles: { fontStyle: 'bold' } },
+          { content: formatNumber(totalState), styles: { fontStyle: 'bold' } },
+          { content: formatNumber(totalTaxAmount), styles: { fontStyle: 'bold' } }
+        ]
+      ],
+      headStyles: {
+        fillColor: [255, 255, 255],
+        textColor: [0, 0, 0],
+        fontStyle: 'bold',
+        halign: 'center',
+        valign: 'middle'
+      },
+      footStyles: {
+        fillColor: [255, 255, 255],
+        fontStyle: 'bold',
+        textColor: 20,
+        halign: 'right'
+      },
+      styles: {
+        fontSize: 9,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.2,
+        cellPadding: 3,
+        halign: 'right',
+        valign: 'middle'
+      },
+      tableWidth: 90,
+      margin: { left: 60 },
+    });
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.text('Tax Amount  (in words):',64,155)
+    doc.text('INR Five thousand nine hundred Only',64,160)
+    doc.text('Payment Type: Cash',64,165)
+    doc.text('Total Weight: 0.2kg',64,170)
+
+    doc.setFont('helvetica','bold');
+    doc.text("Company's Bank Details",64,178)
+    doc.setFont('helvetica','normal');
+    doc.text('Bank Name: Axis Bank',64,183)
+    doc.text('A/c No : 00000000',64,188)
+    doc.text('Branch & IFS CODE : 357657',64,193)
+
+
+    doc.rect(65,198,80,46)
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text(`Sub Total : ${this.invoiceDetails.subTotal}`,70,204)
+    doc.text(`Discount: ${this.invoiceDetails.discount}`,70,209)
+    doc.text(`Transport Charges: ${this.invoiceDetails.transportCharges}`,70,214)
+    doc.text(`Loading Charges : ${this.invoiceDetails.loadingCharges}`,70,219)
+    doc.text(`UnLoading Charges : ${this.invoiceDetails.unloadingCharges}`,70,224)
+    doc.setFillColor(0, 0, 0); // RGB for black
+    doc.rect(68, 227, 75, 5, 'F'); // Adjust width & height as needed
+    doc.setTextColor(255, 255, 255);
+    doc.text(`Total Amount : ${this.invoiceDetails.totalAmount}`,70,230)
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Paid Amount (19/07/2025) : ${this.invoiceDetails.paidAmount}`,70,235)
+    doc.text(`Remaining Amount : ${this.invoiceDetails.remainingAmount}`,70,240)
+
+
+    doc.line(110, 264, 150, 264);
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text("Authorised signatory",114,268)
+
+    doc.text("This is a Computer Generated Invoice",pageWidth / 2, 292, { align: 'center' })
+    // doc.setFontSize(16);
+    // doc.setFont('helvetica', 'bold');
+    // doc.text('5,537.35', 125, 212);
+
+
+    // doc.line(60, 216, 150, 216);
 
 
 
