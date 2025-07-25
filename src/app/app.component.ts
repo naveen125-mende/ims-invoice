@@ -66,7 +66,7 @@ export class AppComponent {
     doc.setFillColor(240, 240, 240); // light gray background
 
     // Draw filled rectangle
-    doc.rect(60, 2, pageWidth - 120, pageHeight - 100, 'F');
+    doc.rect(60, 2, pageWidth - 120, pageHeight - 4, 'F');
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
@@ -110,6 +110,21 @@ export class AppComponent {
 
 
 
+
+
+
+    doc.line(60, 205, 150, 205);
+
+    doc.setFontSize(15);
+    doc.text('60', 70, 212);
+    doc.text('TOTAL :', 90, 212);
+
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.text('5,537.35', 125, 212);
+
+
+    doc.line(60, 216, 150, 216);
 
 
 
