@@ -62,135 +62,75 @@ export class AppComponent {
     };
 
 
-    doc.rect(2, 2, pageWidth - 4, pageHeight - 4,)
+    // Set fill color (RGB format: R, G, B)
+    doc.setFillColor(240, 240, 240); // light gray background
 
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Credit-Note Settle Invoice', pageWidth / 2, 10, { align: 'center' });
-    doc.rect(4, 15, pageWidth - 8, 69);
-    doc.setFontSize(12);
+    // Draw filled rectangle
+    doc.rect(60, 2, pageWidth - 120, pageHeight - 100, 'F');
 
-    doc.setFont('helvetica', 'bold');
-    doc.text('devlats pvt ltd', 6, 20,);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Devlats', 6, 24);
-    doc.text('Nizamabad It Hub', 6, 28);
-    doc.text('Mobile No: 9182029402, 9182029402', 6, 33);
-    doc.text('Email:info@devlats.com', 6, 38);
-    doc.text(`GSTIN/UIN : ${this.invoiceDetails.gstin}`, 6, 43);
-    // const imageBase64 = await this.getImageAsBase64(imageUrl);
-    // doc.addImage(imageBase64, 'JPEG', 17, 28, 16, 16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Buyer', 6, 52,);
-    doc.text('Ganesh Ebterprises', 6, 56);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Ganesh', 6, 60);
-    doc.text('Near Bus Stand Nizamabad', 6, 64);
-    doc.text('Mobile No: 919876543210', 6, 68);
-    doc.text('Email:info@ganesh.com', 6, 73);
-    doc.text(`GSTIN/UIN : ${this.invoiceDetails.gstin}`, 6, 78);
-
-    doc.setFont('helvetica', 'bold');
-    doc.rect((pageWidth / 2) + 9, 42, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 12, 48);
-    doc.text(`64`, (pageWidth / 2) + 12, 53);
-    doc.rect((pageWidth / 2) + 9, 56, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 12, 62);
-    doc.text(`64`, (pageWidth / 2) + 12, 67);
-    doc.rect((pageWidth / 2) + 9, 70, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 12, 76);
-    doc.text(`64`, (pageWidth / 2) + 12, 81);
-    doc.rect((pageWidth / 2) + 55, 42, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 58, 48);
-    doc.text(`64`, (pageWidth / 2) + 58, 53);
-    doc.rect((pageWidth / 2) + 55, 56, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 58, 62);
-    doc.text(`64`, (pageWidth / 2) + 58, 67);
-    doc.rect((pageWidth / 2) + 55, 70, 46, 14);
-    doc.text(`Invoice No. `, (pageWidth / 2) + 58, 76);
-    doc.text(`64`, (pageWidth / 2) + 58, 81);
-
-
-    const itemRows: any[] = [];
-    let rowIndex = 1;
-    let totalAmount = 0;
-
-    this.invoiceDetails.saleItems.forEach((saleItem: any) => {
-      saleItem.item.forEach((itm: any) => {
-        const rowTotal = saleItem.quantity * saleItem.salePrice;
-        totalAmount += rowTotal;
-        itemRows.push([
-          rowIndex++,
-          saleItem.customerName || '-',
-          saleItem.phoneNumber || '-',
-          itm.creditNoteDate || '-',
-          itm.settledDate || '-',
-          itm.creditNoteAmount || 'kg',
-          itm.settledAmount || 'kg',
-          rowTotal.toFixed(2)
-        ]);
-      });
-    });
-
-
-    autoTable(doc, {
-      startY: 88,
-      head: [['Sr.No', 'Customer Name', 'Phone Number', 'Credit-Note date', 'settled Date', 'Credit-Note Amount', 'Settled Amount']],
-      body: itemRows,
-      theme: 'grid',
-      headStyles: {
-        fillColor: [222, 222, 222],
-        textColor: 0,
-        halign: 'left' // default alignment
-      },
-      styles: {
-        fontSize: 9,
-        textColor: 0,
-        cellPadding: 3
-      },
-      columnStyles: {
-        8: { halign: 'right' } // Right-align body & footer of Amount
-      },
-      tableWidth: 202,
-      margin: { left: 4 },
-      didDrawCell: function (data) {
-        // Check if we are in the header and Amount column (index 8)
-        if (data.section === 'head' && data.column.index === 8) {
-          data.cell.styles.halign = 'right';
-        }
-      }
-    });
-
-
-
-
-
-
-
-
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Amount  (in words):', 6, 140)
-    doc.text('INR Five thousand nine hundred', 6, 146)
-
-
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(10);
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12);
-    doc.text('For National Enterprises', 139, 240)
-    doc.line(139, 264, 206, 264);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text("Authorised signatory", 139, 268)
-    doc.rect(4, 276, 202, 12);
-    doc.text("Declaration", 8, 280)
+    doc.text('RAJARAM GENERAL', pageWidth / 2, 10, { align: 'center' });
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text("We declare that this invoice shows the actual ptice of the goods described and that all particulars are true and correct.", 8, 284)
-    doc.text("This is a Computer Generated Invoice", pageWidth / 2, 292, { align: 'center' })
+    doc.text('OLD AYYAPPA NEAR STREET', 65, 18);
+    doc.text('KARAIUDI', 120, 18);
+    doc.text('GSTIN : 33', pageWidth / 2, 23, { align: 'center' });
+    doc.line(60, 25, 150, 25);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('GST INVOICE', pageWidth / 2, 29.5, { align: 'center' });
+    doc.line(60, 31, 150, 31);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.text('24-JUL-25', 62, 34);
+    doc.setFont('helvetica', 'normal');
+    doc.text('PH : 9159721395 / 8667479126 BILL NO :', 80, 34);
+    doc.setFont('helvetica', 'bold');
+    doc.text('11,613', 134, 34);
+    doc.line(60, 35, 150, 35);
+    doc.text('BUYER NAME :', 65, 39);
+    doc.setFont('helvetica', 'normal');
+    doc.text('RAM', 87.5, 39);
+    doc.setFont('helvetica', 'bold');
+    doc.text('MOBILE NUMBER :', 65, 43);
+    doc.setFont('helvetica', 'normal');
+    doc.text('+91 9182029042', 92, 43);
+    doc.setFont('helvetica', 'bold');
+    doc.text('COUNTER SALES', pageWidth / 2, 48, { align: 'center' });
+    doc.line(60, 50, 150, 50);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('particulars', 62, 55);
+    doc.text('Rate', 100, 55);
+    doc.text('Qty', 115, 55);
+    doc.text('Amount', 130, 55);
+    doc.line(60, 57, 150, 57);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // doc.text("3. NO CLAIM SHALL BE ENTERTAINED AFTER PLAYING THE TILES",margin+3,272)
     // doc.text("4. Returns of goods will be accepted within 7 days from the date of purchase.",margin+3,276)
     doc.save(`Invoice_${invoice.invoiceId}.pdf`);
